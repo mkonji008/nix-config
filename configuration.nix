@@ -135,6 +135,7 @@ security.doas.extraRules = [{
    go
    gzip
    i3
+   arandr
    mlocate
    p7zip
    pavucontrol
