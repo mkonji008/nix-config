@@ -122,6 +122,7 @@ security.doas.extraRules = [{
    networkmanager-openvpn
    dex
    libgcc
+   tartube
    git
    gnome.gnome-keyring
    gnugrep
