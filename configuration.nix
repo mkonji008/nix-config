@@ -92,6 +92,7 @@ security.doas.extraRules = [{
 
 
   environment.systemPackages = with pkgs; [ 
+   xfce.xfconf
    kdePackages.kdeconnect-kde
    htop
    bat
