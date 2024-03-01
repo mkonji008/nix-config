@@ -93,6 +93,7 @@ security.doas.extraRules = [{
 
   environment.systemPackages = with pkgs; [ 
    xfce.xfconf
+   eza
    kdePackages.kdeconnect-kde
    htop
    bat
@@ -111,6 +112,7 @@ security.doas.extraRules = [{
    flatpak
    floorp
    fontconfig
+   font-manager
    fuse-common
    gcc
    nitrogen
