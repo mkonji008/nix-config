@@ -1,32 +1,33 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.device = "nodev";
-  boot.loader.grub.efiSupport = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
-  boot.loader.grub.enable = true;
-  boot.loader.grub.useOSProber = true;
-
-  networking.hostName = "nixbox"; # Define your hostname.
+  boot = {
+    kernelParams = ["nohibernate"];
+    tmp.cleanOnBoot = true;
+    supportedFilesystems = ["ntfs"];
+    loader = {
+      efi.canTouchEfiVariables = true;
+      grub = {
+        device = "nodev";
+        efiSupport = true;
+        enable = true;
+        useOSProber = true;
+        timeoutStyle = "menu";
+      };
+      timeout = 300;
+    };
+};
+  networking.hostName = "nixbox";
   # networking.wireless.enable = true; 
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -41,66 +42,82 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mkonji = {
     isNormalUser = true;
     description = "mkonji";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "flatpak"
+      "disk"
+      "qemu"
+      "kvm"
+      "libvirtd"
+      "sshd"
+      "networkmanager"
+      "wheel"
+      "audio"
+      "video"
+      "libvirtd"
+      "root"
+    ];
   };
 
-services.xserver.enable = true;
-services.xserver.autorun = true;
-#services.xserver.desktopManager.default = "none+i3";
-services.xserver.desktopManager.xterm.enable = false;
-services.xserver.windowManager.i3.enable = true;
-services.qemuGuest.enable = true;
-services.xserver.displayManager.lightdm = {
-   enable = true;
-   extraConfig = ''
-   	logind-check-graphical=true
-   '';
-};
-services.xserver.displayManager.lightdm.greeters.slick.enable = true;
-services.xserver.displayManager.defaultSession = "none+i3";
+  services = {
+    flatpak.enable = true;
+    dbus.enable = true;
+    picom.enable = true;
+    qemuGuest.enable = true;
 
-## doas
-security.doas.enable = true;
-security.sudo.enable = false;
-security.doas.extraRules = [{
-   users = ["mkonji"];
-   keepEnv = true;
-   persist = true;
-}];
+    xserver = {
+      autorun = true;
+      enable = true;
+      windowManager.i3.enable = true;
+      layout = "us";
 
-  # Allow unfree packages
+      desktopManager.xterm.enable = true;
+
+      displayManager = {
+        defaultSession = "none+i3";
+	lightdm = { 
+	  enable = true;
+          greeters.slick.enable = true;
+          extraConfig = ''
+            logind-check-graphical=true
+             ''; 
+##       setupCommands = ''
+##         ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --off --output DP-2 --off --output DP-3 --off --output HDMI-1 --mode 3840x1080 --pos 0x0 --rotate normal
+##        '';
+        autoLogin = {
+          enable = false;
+          user = "mkonji";
+          };
+        };
+      };
+    };
+  };
+
+    security.doas.enable = true;
+    security.sudo.enable = false;
+    security.doas.extraRules = [{
+      users = ["mkonji"];
+      keepEnv = true;
+      persist = true;
+    }];
+
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
-#  environment.systempackages = [
-#   ];
-#
-#  _module.args.unstable-pkgs = import <nixos-unstable> {};
-
 
   environment.systemPackages = with pkgs; [ 
    xfce.xfconf
-   eza
    kdePackages.kdeconnect-kde
+   eza
+   font-manager
    htop
+   arandr
    bat
    bat
    btop
    bzip3
    cargo
+   bitwarden-desktop
    clang-tools_9
    copyq
    curl
@@ -112,7 +129,6 @@ security.doas.extraRules = [{
    flatpak
    floorp
    fontconfig
-   font-manager
    fuse-common
    gcc
    nitrogen
@@ -122,7 +138,6 @@ security.doas.extraRules = [{
    networkmanager-openvpn
    dex
    libgcc
-   tartube
    git
    gnome.gnome-keyring
    gnugrep
@@ -139,7 +154,6 @@ security.doas.extraRules = [{
    go
    gzip
    i3
-   arandr
    mlocate
    p7zip
    pavucontrol
@@ -179,34 +193,60 @@ security.doas.extraRules = [{
    tmux
    mplayer
    cmus
-   fira-code-nerdfont
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  console = {
+    packages = [pkgs.terminus_font];
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-i22b.psf.gz";
+    useXkbConfig = true;
+};
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      font-awesome
+      source-han-sans
+      source-han-sans-japanese
+      source-han-serif-japanese
+      (nerdfonts.override {fonts = ["Meslo"];})
+    ];
+    fontconfig = {
+      enable = true;
+     defaultFonts = {
+       monospace = ["Meslo LG M Regular Nerd Font Complete Mono"];
+       serif = ["Noto Serif" "Source Han Serif"];
+       sansSerif = ["Noto Sans" "Source Han Sans"];
+     };
+    };
+   }; 
+    
+    xdg.portal = {
+      enable = true;
+      config.common.default = "*";
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    };  
 
-  # List services that you want to enable:
+    systemd = {
+      user.services.polkit-gnome-authentication-agent-1 = {
+        description = "polkit-gnome-authentication-agent-1";
+        wantedBy = ["graphical-session.target"];
+        wants = ["graphical-session.target"];
+        after = ["graphical-session.target"];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+    };
+    
+    security.polkit.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+    virtualisation.libvirtd.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 
 }
