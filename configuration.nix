@@ -71,7 +71,7 @@
       autorun = true;
       enable = true;
       windowManager.i3.enable = true;
-      layout = "us";
+      xkb.layout = "us";
 
       desktopManager.xterm.enable = true;
 
@@ -86,14 +86,10 @@
 ##       setupCommands = ''
 ##         ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --off --output DP-2 --off --output DP-3 --off --output HDMI-1 --mode 3840x1080 --pos 0x0 --rotate normal
 ##        '';
-        autoLogin = {
-          enable = false;
-          user = "mkonji";
-          };
-        };
+         };
       };
-    };
-  };
+   };
+};
 
     security.doas.enable = true;
     security.sudo.enable = false;
