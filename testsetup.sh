@@ -53,15 +53,20 @@ else
   echo "skipping configuration file copy."
 fi
 
-neovim_config_dir="$home_dir/code/dots/neovim-config"
-if [ -d "$neovim_config_dir" ]; then
-  echo "neovim configuration directory already exists, updating it..."
-  (cd "$neovim_config_dir" && git fetch --depth=1 && git reset --hard origin/main) || { echo "error: failed to update neovim configuration."; exit 1; }
-  echo "neovim configuration updated successfully."
+echo "Removing existing neovim configuration directory..."
+if rm -rf "$home_dir/code/dots/neovim-config"; then
+  echo "Directory removed successfully."
 else
-  echo "cloning neovim configuration repository..."
-  git clone --depth=1 https://github.com/mkonji008/neovim-config "$neovim_config_dir" || { echo "error: failed to clone neovim configuration."; exit 1; }
-  echo "neovim configuration cloned successfully."
+  echo "Failed to remove directory."
+  exit 1
+fi
+
+echo "cloning neovim configuration repository..."
+if git clone https://github.com/mkonji008/neovim-config "$home_dir/code/dots/neovim-config"; then
+  echo "neovim-config cloned successfully."
+else
+  echo "failed to clone neovim-config."
+  exit 1
 fi
 
 echo "copying neovim '$home_dir/code/dots/nvim-config' to '$home_dir/.config/nvim'..."
