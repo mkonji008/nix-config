@@ -64,24 +64,12 @@ else
   echo "neovim configuration cloned successfully."
 fi
 
-source_target_pairs=(
-  "$home_dir/code/nvim-config" "$home_dir/.config/nvim"
-)
+echo "copying neovim '$home_dir/code/dots/nvim-config' to '$home_dir/.config/nvim'..."
+if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/nvim-config" "$home_dir/.config/nvim"; then
+  echo "neovim config copied successfully"
+else
+  echo "failed to copy neovim config"
+fi
 
-echo "copying directories..."
-for ((i = 0; i < ${#source_target_pairs[@]}; i+=2)); do
-  source_index=$i
-  target_index=$((i + 1))
 
-  source_dir="${source_target_pairs[$source_index]}"
-  target_dir="${source_target_pairs[$target_index]}"
-
-  echo "copying directory '$source_dir' to '$target_dir'..."
-  if cp -r "$source_dir" "$target_dir"; then
-    echo "directory copied successfully."
-  else
-    echo "failed to copy directory."
-  fi
-done
-
-echo "configuration updated, system rebuilt, neovim configuration cloned, and directories copied successfully."
+echo "configuration updated, system rebuilt, neovim configuration cloned, and dotfiles copied successfully."
