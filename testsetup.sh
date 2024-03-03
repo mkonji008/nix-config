@@ -65,7 +65,7 @@ else
 fi
 
 source_target_pairs=(
-  "/home/$user_name/nix-config" "$home_dir/.config/nvim"
+  "/home/$user_name/code/nvim-config/" "$home_dir/.config/nvim"
 )
 
 echo "copying directories..."
