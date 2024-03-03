@@ -65,13 +65,13 @@ else
 fi
 
 source_target_pairs=(
-  "/home/$user_name/code/nvim-config/" "$home_dir/.config/nvim"
+  "/home/$user_name/code/nvim-config" "$home_dir/.config/nvim"
 )
 
 echo "copying directories..."
-for pair in "${source_target_pairs[@]}"; do
-  source_dir="${pair%%=*}"
-  target_dir="${pair#*=}"
+for ((i = 0; i < ${#source_target_pairs[@]}; i+=2)); do
+  source_dir="${source_target_pairs[i]}"
+  target_dir="${source_target_pairs[i+1]}"
 
   echo "copying directory '$source_dir' to '$target_dir'..."
   if cp -r "$source_dir" "$target_dir"; then
@@ -80,5 +80,6 @@ for pair in "${source_target_pairs[@]}"; do
     echo "failed to copy directory."
   fi
 done
+
 
 echo "configuration updated, system rebuilt, neovim configuration cloned, and directories copied successfully."
