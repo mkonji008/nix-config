@@ -158,7 +158,7 @@
    rar
    remmina
    rustc
-   rustdesk
+ #(compile errors)  rustdesk
    terraform
    polkit_gnome
    protonup-ng
