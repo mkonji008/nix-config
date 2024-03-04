@@ -103,15 +103,24 @@ copy_dotfiles() {
 	)
 
 	echo "copying directories..."
-	for pair in "${source_target_pairs[@]}"; do
-		source_dir="${pair%%=*}"
-		target_dir="${pair#*=}"
+	for ((i = 0; i < ${#source_target_pairs[@]}; i += 2)); do
+		source_dir="${source_target_pairs[i]}"
+		target_dir="${source_target_pairs[i + 1]}"
 
 		echo "copying directory '$source_dir' to '$target_dir'..."
-		if cp -r "$source_dir" "$target_dir"; then
-			echo "$source_dir to $target_dir copied successfully."
+		if [ -d "$source_dir" ]; then
+			mkdir -p "$target_dir" || {
+				echo "error: failed to create target directory '$target_dir'"
+				exit 1
+			}
+			cp -r "$source_dir"/* "$target_dir" || {
+				echo "error: failed to copy files from '$source_dir' to '$target_dir'"
+				exit 1
+			}
+			echo "directory copied successfully."
 		else
-			echo "failed to copy directory."
+			echo "error: source directory '$source_dir' not found."
+			exit 1
 		fi
 	done
 }
