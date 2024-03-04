@@ -39,19 +39,23 @@ else
   echo "nixos already on unstable channel, skipping update."
 fi
 
-echo "rebuilding nixos configuration..."
-nixos-rebuild switch || { echo "error: failed to rebuild nixos configuration."; exit 1; }
-echo "nixos configuration rebuilt."
+echo "rebuilding nixos configuration...(run1)"
+nixos-rebuild switch || { echo "error: failed to rebuild nixos configuration.(run1)"; exit 1; }
+echo "nixos configuration rebuilt.(run1)"
 
 read -p "copy configuration.nix and hardware-configuration.nix to /etc/nixos/? (y/n) " -r confirm_nix_copy
 if [[ "$confirm_nix_copy" =~ ^[yy]$ ]]; then
   echo "copying configuration files..."
   cp -f configuration.nix /etc/nixos/
-  cp -f hardware-configuration.nix /etc/nixos/
+#  cp -f hardware-configuration.nix /etc/nixos/
   echo "configuration files copied."
 else
   echo "skipping configuration file copy."
 fi
+
+echo "rebuilding nixos configuration...(run2)"
+nixos-rebuild switch || { echo "error: failed to rebuild nixos configuration.(run2)"; exit 1; }
+echo "nixos configuration rebuilt.(run2)"
 
 echo "Removing existing neovim configuration directory..."
 if rm -rf "$home_dir/code/dots/neovim-config"; then
