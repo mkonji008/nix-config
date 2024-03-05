@@ -89,8 +89,8 @@ else
 	exit 1
 fi
 
-echo "copying neovim '$home_dir/code/dots/neovim-config' to '$home_dir/.config/nvim'..."
-if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/neovim-config" "$home_dir/.config/nvim"; then
+echo "copying neovim '$home_dir/code/dots/neovim-config/' to '$home_dir/.config/nvim'..."
+if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/neovim-config/nvim" "$home_dir/.config/nvim"; then
 	echo "neovim config copied successfully"
 else
 	echo "failed to copy neovim config"
