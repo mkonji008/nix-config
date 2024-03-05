@@ -82,19 +82,22 @@ bashrc="$home_dir/nix-config/dots/.bashrc"
 
 read -p "setup oh-my-bash? (y/n) " setup-omb
 
-if [ "$setup-omb" != "${setup-omb#[Yy]}" ]; then
+if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
 	wait
 	if [ $? -eq 0 ]; then
 		echo "oh-my-bash installed successfully."
-		cp -f $bashrc $home_dir/.bashrc
-		echo "copied .bashrc to $home_dir"
 	else
 		echo "error: oh-my-bash installation failed."
 		exit 1
 	fi
 else
 	echo "skipping oh-my-bash installation."
+fi
+
+if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
+	cp -f $bashrc $home_dir/.bashrc
+	echo "copied .bashrc to $home_dir"
 fi
 
 ##
