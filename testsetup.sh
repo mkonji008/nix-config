@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+red='\033[0;31m'
+green='\033[0;32m'
+reset='\033[0m'
+
 read -p "enter username: " user_name
 
 read -p "is '$user_name' the correct username? (y/n): " username_confirm
@@ -62,12 +66,12 @@ else
 	echo "skipping configuration file copy."
 fi
 
-echo "rebuilding nixos configuration...(run2)"
+echo "rebuilding nixos configuration..."
 nixos-rebuild switch || {
-	echo "error: failed to rebuild nixos configuration.(run2)"
+	echo "error: failed to rebuild nixos configuration."
 	exit 1
 }
-echo "nixos configuration rebuilt.(run2)"
+echo "nixos configuration rebuilt."
 
 echo "Removing existing neovim configuration directory..."
 if rm -rf "$home_dir/code/dots/neovim-config"; then
@@ -92,37 +96,58 @@ else
 	echo "failed to copy neovim config"
 fi
 
-copy_dotfiles() {
-	source_target_pairs=(
-		"$home_dir/nix-config/dots/dotlocal" "$home_dir/.local"
-		"$home_dir/nix-config/dots/dotconfig" "$home_dir/.config"
-		"$home_dir/nix-config/dots/wallpaper" "$home_dir/Pictures"
-		#  "/path/to/source/directory4" "$home_dir/Downloads/dir4"
-		#  "/path/to/source/directory5" "$home_dir/Pictures/dir5"
-		#  "/path/to/source/directory6" "$home_dir/Videos/dir6"
-	)
+echo "copying .config '$home_dir/nix-config/dots/dotconfig' to '$home_dir/.config'..."
+if mkdir -p "$home_dir/.config" && cp -r "$home_dir/nix-config/dots/dotconfig" "$home_dir/.config"; then
+	echo ".config copied successfully"
+else
+	echo "failed to copy .config"
+fi
 
-	echo "copying directories..."
-	for ((i = 0; i < ${#source_target_pairs[@]}; i += 2)); do
-		source_dir="${source_target_pairs[i]}"
-		target_dir="${source_target_pairs[i + 1]}"
+echo "copying .local '$home_dir/nix-config/dots/dotlocal' to '$home_dir/.local'..."
+if mkdir -p "$home_dir/.local/share" && cp -r "$home_dir/nix-config/dots/dotlocal" "$home_dir/.config/nvim"; then
+	echo ".local copied successfully"
+else
+	echo "failed to copy .local"
+fi
 
-		echo "copying directory '$source_dir' to '$target_dir'..."
-		if [ -d "$source_dir" ]; then
-			mkdir -p "$target_dir" || {
-				echo "error: failed to create target directory '$target_dir'"
-				exit 1
-			}
-			cp -r "$source_dir"/* "$target_dir" || {
-				echo "error: failed to copy files from '$source_dir' to '$target_dir'"
-				exit 1
-			}
-			echo "directory copied successfully."
-		else
-			echo "error: source directory '$source_dir' not found."
-			exit 1
-		fi
-	done
-}
+echo "copying wallpaper '$home_dir/nix-config/dots/wallpaper' to '$home_dir/Pictures'..."
+if mkdir -p "$home_dir/Pictures/wallpaper" && cp -r "$home_dir/nix-config/dots/wallpaper" "$home_dir/Pictures/wallpaper"; then
+	echo "wallpapers copied successfully"
+else
+	echo "failed to copy wallpapers"
+fi
+
+#   copy_dotfiles() {
+#   	source_target_pairs=(
+#   		"$home_dir/nix-config/dots/dotlocal" "$home_dir/.local"
+#   		"$home_dir/nix-config/dots/dotconfig" "$home_dir/.config"
+#   		"$home_dir/nix-config/dots/wallpaper" "$home_dir/Pictures"
+#   		#  "/path/to/source/directory4" "$home_dir/Downloads/dir4"
+#   		#  "/path/to/source/directory5" "$home_dir/Pictures/dir5"
+#   		#  "/path/to/source/directory6" "$home_dir/Videos/dir6"
+#   	)
+#
+#   	echo "copying directories..."
+#   	for ((i = 0; i < ${#source_target_pairs[@]}; i += 2)); do
+#   		source_dir="${source_target_pairs[i]}"
+#   		target_dir="${source_target_pairs[i + 1]}"
+#
+#   		echo "copying directory '$source_dir' to '$target_dir'..."
+#   		if [ -d "$source_dir" ]; then
+#   			mkdir -p "$target_dir" || {
+#   				echo "error: failed to create target directory '$target_dir'"
+#   				exit 1
+#   			}
+#   			cp -r "$source_dir"/* "$target_dir" || {
+#   				echo "error: failed to copy files from '$source_dir' to '$target_dir'"
+#   				exit 1
+#   			}
+#   			echo "directory copied successfully."
+#   		else
+#   			echo "error: source directory '$source_dir' not found."
+#   			exit 1
+#   		fi
+#   	done
+#   }
 
 echo "configuration updated, system rebuilt, neovim configuration cloned, and dotfiles copied successfully..hopefully <3"
