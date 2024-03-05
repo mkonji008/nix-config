@@ -89,6 +89,17 @@
          };
       };
    };
+{pkgs, ...}: {
+  config = {
+    i18n.inputMethod.enabled = "fcitx5";
+    i18n.inputMethod.fcitx5.addons = [
+      pkgs.fcitx5-mozc
+      pkgs.fcitx5-gtk
+      pkgs.fcitx5-configtool
+    ]; 
+    environment.variables.GLFW_IM_MODULE = "ibus";
+  };
+};
 };
 
     security.doas.enable = true;
@@ -102,78 +113,84 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [ 
-   xfce.xfconf
-   kdePackages.kdeconnect-kde
-   nodePackages.npm
-   nodejs_21
-   unzip
-   eza
-   font-manager
-   htop
+   ansible
    arandr
    bat
    bat
+   bitwarden-desktop
    btop
    bzip3
    cargo
-   bitwarden-desktop
    clang-tools_9
+   cmake
+   cmus
    copyq
    curl
+   dex
    doas
+   dosfstools
    dunst
    elinks
+   eza
    filezilla
    flameshot
    flatpak
    floorp
+   font-manager
    fontconfig
    fuse-common
    gcc
-   nitrogen
-   networkmanagerapplet
-   google-drive-ocamlfuse
-   qutebrowser
-   networkmanager-openvpn
-   dex
-   libgcc
    git
    gnome.gnome-keyring
    gnugrep
    gnumake
+   go
+   google-drive-ocamlfuse
    gparted
+   gzip
+   htop
+   i3
+   kdePackages.kdeconnect-kde
+   libgcc
+   libreoffice
    lxappearance
+   mlocate
+   mplayer
    neofetch
    neovim
+   networkmanager-openvpn
+   networkmanagerapplet
+   nitrogen
+   nodePackages.npm
+   nodejs_21
    openssl
    os-prober
-   ansible
-   cmake
-   dosfstools
-   go
-   gzip
-   i3
-   mlocate
    p7zip
    pavucontrol
    picom
-   pulseaudioFull
-   rar
-   remmina
-   rustc
- #(compile errors)  rustdesk
-   terraform
    polkit_gnome
    protonup-ng
+   pulseaudioFull
+   python3
    qemu
+   qutebrowser
    ranger
+   rar
+   remmina
    ripgrep
    rofi
+   rustc
    steam
    steam-run
+   terraform
    tldr
+   tmux
    trash-cli
+   unzip
+   usbutils
    virt-manager
+   vlc
+   w3m
    w3m
    wget
    xarchiver
@@ -181,17 +198,12 @@
    xdg-desktop-portal-gtk
    xfce.thunar
    xfce.xfce4-terminal
-   zathura
-   libreoffice
-   zip
+   xfce.xfconf
    xz
    yamllint
-   w3m
-   vlc
-   usbutils
-   tmux
-   mplayer
-   cmus
+   zathura
+   zip
+ #(compile errors)  rustdesk
   ];
 
   console = {

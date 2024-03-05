@@ -84,7 +84,11 @@ read -p "setup oh-my-bash? (y/n) " setup_omb
 
 if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
-	wait
+
+	while [[ $(jobs | wc -l) -gt 0 ]]; do
+		sleep 1
+	done
+
 	if [ $? -eq 0 ]; then
 		echo "oh-my-bash installed successfully."
 	else
@@ -93,8 +97,8 @@ if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	fi
 else
 	echo "skipping oh-my-bash installation."
-fi
 
+fi
 if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	cp -f $bashrc $home_dir/.bashrc
 	echo "copied .bashrc to $home_dir"
