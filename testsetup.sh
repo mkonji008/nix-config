@@ -90,28 +90,28 @@ else
 fi
 
 echo "copying neovim '$home_dir/code/dots/neovim-config/' to '$home_dir/.config/nvim'..."
-if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/neovim-config/nvim" "$home_dir/.config/nvim"; then
+if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/neovim-config/" "$home_dir/.config/nvim"; then
 	echo "neovim config copied successfully"
 else
 	echo "failed to copy neovim config"
 fi
 
-echo "copying .config '$home_dir/nix-config/dots/dotconfig' to '$home_dir/.config'..."
-if mkdir -p "$home_dir/.config" && cp -r "$home_dir/nix-config/dots/dotconfig" "$home_dir/.config"; then
+echo "copying .config '$home_dir/nix-config/dots/dotconfig/' to '$home_dir/.config'..."
+if mkdir -p "$home_dir/.config" && cp -r "$home_dir/nix-config/dots/dotconfig/" "$home_dir/.config"; then
 	echo ".config copied successfully"
 else
 	echo "failed to copy .config"
 fi
 
 echo "copying .local '$home_dir/nix-config/dots/dotlocal' to '$home_dir/.local'..."
-if mkdir -p "$home_dir/.local/share" && cp -r "$home_dir/nix-config/dots/dotlocal" "$home_dir/.config/nvim"; then
+if mkdir -p "$home_dir/.local/share" && cp -r "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/share"; then
 	echo ".local copied successfully"
 else
 	echo "failed to copy .local"
 fi
 
 echo "copying wallpaper '$home_dir/nix-config/dots/wallpaper' to '$home_dir/Pictures'..."
-if mkdir -p "$home_dir/Pictures/wallpaper" && cp -r "$home_dir/nix-config/dots/wallpaper" "$home_dir/Pictures/wallpaper"; then
+if mkdir -p "$home_dir/Pictures/wallpaper" && cp -r "$home_dir/nix-config/dots/wallpaper/" "$home_dir/Pictures/wallpaper"; then
 	echo "wallpapers copied successfully"
 else
 	echo "failed to copy wallpapers"
