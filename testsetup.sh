@@ -90,7 +90,7 @@ else
 fi
 
 echo "copying neovim '$home_dir/code/dots/neovim-config/' to '$home_dir/.config/nvim'..."
-if mkdir -p "$home_dir/.config/nvim" && cp -r "$home_dir/code/dots/neovim-config/" "$home_dir/.config/nvim"; then
+if mkdir -p "$home_dir/.config/nvim" && cp -rT "$home_dir/code/dots/neovim-config/" "$home_dir/.config/nvim"; then
 	echo "neovim config copied successfully"
 else
 	echo "failed to copy neovim config"
@@ -104,7 +104,7 @@ else
 fi
 
 echo "copying .local '$home_dir/nix-config/dots/dotlocal' to '$home_dir/.local'..."
-if mkdir -p "$home_dir/.local/share" && cp -rT "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/share"; then
+if mkdir -p "$home_dir/.local/share" && cp -rT "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/"; then
 	echo ".local copied successfully"
 else
 	echo "failed to copy .local"
@@ -118,10 +118,18 @@ else
 fi
 
 echo "changing ownership of $home_dir"
-if chown -R "$user_name:$user_name" "$home_dir"; then
+if chown -R "$user_name" "$home_dir"; then
 	echo "ownership changed."
 else
 	echo "failed to change ownership."
+	exit 1
+fi
+
+echo "changing permissions to drwxr-xr-x of $home_dir for $user_name"
+if chmod -R 775 "$home_dir"; then
+	echo "drwxr-xr-x changed for $user_name."
+else
+	echo "failed to change permissions."
 	exit 1
 fi
 
