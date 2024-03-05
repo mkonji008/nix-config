@@ -133,7 +133,8 @@ else
 	exit 1
 fi
 
-if su $user_name -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"'; then
+echo "setting up oh-my-bash"
+if doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"'; then
 	echo "oh-my-bash installed successfully."
 else
 	echo "error: oh-my-bash installation failed."
