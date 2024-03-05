@@ -80,7 +80,7 @@ fi
 ##
 bashrc="$home_dir/nix-config/dots/.bashrc"
 
-read -p "setup oh-my-bash? (y/n) " setup-omb
+read -p "setup oh-my-bash? (y/n) " setup_omb
 
 if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
