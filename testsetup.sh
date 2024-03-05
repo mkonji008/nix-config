@@ -133,6 +133,13 @@ else
 	exit 1
 fi
 
+if su $user_name -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)"'; then
+	echo "oh-my-bash installed successfully."
+else
+	echo "error: oh-my-bash installation failed."
+	exit 1
+fi
+
 #   copy_dotfiles() {
 #   	source_target_pairs=(
 #   		"$home_dir/nix-config/dots/dotlocal" "$home_dir/.local"

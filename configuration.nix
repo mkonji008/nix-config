@@ -104,6 +104,9 @@
   environment.systemPackages = with pkgs; [ 
    xfce.xfconf
    kdePackages.kdeconnect-kde
+   nodePackages.npm
+   nodejs_21
+   unzip
    eza
    font-manager
    htop
