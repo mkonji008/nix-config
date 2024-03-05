@@ -97,24 +97,32 @@ else
 fi
 
 echo "copying .config '$home_dir/nix-config/dots/dotconfig/' to '$home_dir/.config'..."
-if mkdir -p "$home_dir/.config" && cp -r "$home_dir/nix-config/dots/dotconfig/" "$home_dir/.config"; then
+if mkdir -p "$home_dir/.config" && cp -rT "$home_dir/nix-config/dots/dotconfig/" "$home_dir/.config"; then
 	echo ".config copied successfully"
 else
 	echo "failed to copy .config"
 fi
 
 echo "copying .local '$home_dir/nix-config/dots/dotlocal' to '$home_dir/.local'..."
-if mkdir -p "$home_dir/.local/share" && cp -r "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/share"; then
+if mkdir -p "$home_dir/.local/share" && cp -rT "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/share"; then
 	echo ".local copied successfully"
 else
 	echo "failed to copy .local"
 fi
 
 echo "copying wallpaper '$home_dir/nix-config/dots/wallpaper' to '$home_dir/Pictures'..."
-if mkdir -p "$home_dir/Pictures/wallpaper" && cp -r "$home_dir/nix-config/dots/wallpaper/" "$home_dir/Pictures/wallpaper"; then
+if mkdir -p "$home_dir/Pictures/wallpaper" && cp -rT "$home_dir/nix-config/dots/wallpaper/" "$home_dir/Pictures/wallpaper"; then
 	echo "wallpapers copied successfully"
 else
 	echo "failed to copy wallpapers"
+fi
+
+echo "changing ownership of $home_dir"
+if chown -R "$user_name:$user_name" "$home_dir"; then
+	echo "ownership changed."
+else
+	echo "failed to change ownership."
+	exit 1
 fi
 
 #   copy_dotfiles() {
