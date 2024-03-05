@@ -19,6 +19,7 @@ fi
 
 home_dir="/home/$user_name"
 
+##
 default_dirs=(".config" "Documents" "Downloads" "Music" "Pictures" "Videos" "code" "code/dots" "code/tmp" "code/ext" "/code/prj")
 
 for dir in "${default_dirs[@]}"; do
@@ -34,6 +35,7 @@ for dir in "${default_dirs[@]}"; do
 	fi
 done
 
+##
 echo "checking current nixos channel..."
 current_channel=$(nix-channel --list | grep 'nixos https://nixos.org/channels/nixos-unstable')
 if [[ -z "$current_channel" ]]; then
@@ -49,6 +51,7 @@ else
 	echo "nixos already on unstable channel, skipping update."
 fi
 
+##
 # inital run if you are getting an error, usually caused by lowmem..
 # run once once by doing a $nixos-rebuild switch before the configuration.nix is copied
 #
@@ -56,28 +59,50 @@ fi
 # nixos-rebuild switch || { echo "error: failed to rebuild nixos configuration.(run1)"; exit 1; }
 # echo "nixos configuration rebuilt.(run1)"
 
+##
 read -p "copy configuration.nix and hardware-configuration.nix to /etc/nixos/? (y/n) " -r confirm_nix_copy
 if [[ "$confirm_nix_copy" =~ ^[yy]$ ]]; then
 	echo "copying configuration files..."
 	cp -f configuration.nix /etc/nixos/
 	#  cp -f hardware-configuration.nix /etc/nixos/
 	echo "configuration files copied."
+
+	echo "rebuilding nixos configuration..."
+	nixos-rebuild switch || {
+		echo "error: failed to rebuild nixos configuration."
+		exit 1
+	}
+	echo "nixos configuration rebuilt."
 else
 	echo "skipping configuration file copy."
 fi
 
-echo "rebuilding nixos configuration..."
-nixos-rebuild switch || {
-	echo "error: failed to rebuild nixos configuration."
-	exit 1
-}
-echo "nixos configuration rebuilt."
+##
+bashrc="$home_dir/nix-config/dots/.bashrc"
 
-echo "Removing existing neovim configuration directory..."
-if rm -rf "$home_dir/code/dots/neovim-config"; then
-	echo "Directory removed successfully."
+read -p "setup oh-my-bash? (y/n) " setup-omb
+
+if [ "$setup-omb" != "${setup-omb#[Yy]}" ]; then
+	doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
+	wait
+	if [ $? -eq 0 ]; then
+		echo "oh-my-bash installed successfully."
+		cp -f $bashrc $home_dir/.bashrc
+		echo "copied .bashrc to $home_dir"
+	else
+		echo "error: oh-my-bash installation failed."
+		exit 1
+	fi
 else
-	echo "Failed to remove directory."
+	echo "skipping oh-my-bash installation."
+fi
+
+##
+echo "removing existing neovim configuration directory..."
+if rm -rf "$home_dir/code/dots/neovim-config"; then
+	echo "directory removed successfully."
+else
+	echo "failed to remove directory."
 	exit 1
 fi
 
@@ -96,6 +121,7 @@ else
 	echo "failed to copy neovim config"
 fi
 
+##
 echo "copying .config '$home_dir/nix-config/dots/dotconfig/' to '$home_dir/.config'..."
 if mkdir -p "$home_dir/.config" && cp -rT "$home_dir/nix-config/dots/dotconfig/" "$home_dir/.config"; then
 	echo ".config copied successfully"
@@ -103,6 +129,7 @@ else
 	echo "failed to copy .config"
 fi
 
+##
 echo "copying .local '$home_dir/nix-config/dots/dotlocal' to '$home_dir/.local'..."
 if mkdir -p "$home_dir/.local/share" && cp -rT "$home_dir/nix-config/dots/dotlocal/" "$home_dir/.local/"; then
 	echo ".local copied successfully"
@@ -110,6 +137,7 @@ else
 	echo "failed to copy .local"
 fi
 
+##
 echo "copying wallpaper '$home_dir/nix-config/dots/wallpaper' to '$home_dir/Pictures'..."
 if mkdir -p "$home_dir/Pictures/wallpaper" && cp -rT "$home_dir/nix-config/dots/wallpaper/" "$home_dir/Pictures/wallpaper"; then
 	echo "wallpapers copied successfully"
@@ -117,6 +145,7 @@ else
 	echo "failed to copy wallpapers"
 fi
 
+##
 echo "changing ownership of $home_dir"
 if chown -R "$user_name" "$home_dir"; then
 	echo "ownership changed."
@@ -133,48 +162,5 @@ else
 	exit 1
 fi
 
-doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
-
-wait
-
-if [ $? -eq 0 ]; then
-	echo "oh-my-bash installed successfully."
-else
-	echo "error: oh-my-bash installation failed."
-	exit 1
-fi
-
-#   copy_dotfiles() {
-#   	source_target_pairs=(
-#   		"$home_dir/nix-config/dots/dotlocal" "$home_dir/.local"
-#   		"$home_dir/nix-config/dots/dotconfig" "$home_dir/.config"
-#   		"$home_dir/nix-config/dots/wallpaper" "$home_dir/Pictures"
-#   		#  "/path/to/source/directory4" "$home_dir/Downloads/dir4"
-#   		#  "/path/to/source/directory5" "$home_dir/Pictures/dir5"
-#   		#  "/path/to/source/directory6" "$home_dir/Videos/dir6"
-#   	)
-#
-#   	echo "copying directories..."
-#   	for ((i = 0; i < ${#source_target_pairs[@]}; i += 2)); do
-#   		source_dir="${source_target_pairs[i]}"
-#   		target_dir="${source_target_pairs[i + 1]}"
-#
-#   		echo "copying directory '$source_dir' to '$target_dir'..."
-#   		if [ -d "$source_dir" ]; then
-#   			mkdir -p "$target_dir" || {
-#   				echo "error: failed to create target directory '$target_dir'"
-#   				exit 1
-#   			}
-#   			cp -r "$source_dir"/* "$target_dir" || {
-#   				echo "error: failed to copy files from '$source_dir' to '$target_dir'"
-#   				exit 1
-#   			}
-#   			echo "directory copied successfully."
-#   		else
-#   			echo "error: source directory '$source_dir' not found."
-#   			exit 1
-#   		fi
-#   	done
-#   }
-
+##
 echo "configuration updated, system rebuilt, neovim configuration cloned, and dotfiles copied successfully..hopefully <3"
