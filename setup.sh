@@ -3,8 +3,8 @@
 red='\033[0;31m'
 green='\033[0;32m'
 yellow='\033[1;33m'
+blue='\033[0;94m'
 reset='\033[0m'
-blue='\033[0;34m'
 
 read -p "$(echo -e "${blue}enter username: ${reset}")" user_name
 
@@ -54,7 +54,7 @@ else
 fi
 
 ##
-read -p "$(echo -e "${green}copy configuration.nix and hardware-configuration.nix to /etc/nixos/? (y/n) ${reset}")" -r confirm_nix_copy
+read -p "$(echo -e "${blue}copy configuration.nix and hardware-configuration.nix to /etc/nixos/? (y/n) ${reset}")" -r confirm_nix_copy
 if [[ "$confirm_nix_copy" =~ ^[yy]$ ]]; then
 	echo -e "${yellow}copying configuration files...${reset}"
 	cp -f configuration.nix /etc/nixos/
@@ -166,9 +166,14 @@ fi
 ##
 su -l $user_name -c "
 
-read -p '${blue} enter your git username: ${reset}' git_username
-read -p '${blue} enter your git email: ${reset}' git_email
-read -p '${blue} enter your text editor for git (e.g., nvim, emacs): ${reset}' git_editor
+echo -e '${blue}enter your git username:${reset}'
+read git_username
+
+echo -e '${blue}enter your git email:${reset}'
+read git_email
+
+echo -e '${blue}enter your text editor for git (e.g., nvim, emacs):${reset}'
+read git_editor
 
 git config --global user.name \"\$git_username\" && \
 git config --global user.email \"\$git_email\" && \
@@ -193,11 +198,52 @@ echo -e "${green}git globals configured successfully.${reset}"
 
 ##
 echo "${green}create symlink for floorp $home_dir ${reset}"
-if ln -s "$home_dir/.config/floorp" "$home_dir/floorp" &>/dev/null; then
-	echo "${green}created symlink for floorp${reset}"
+if ln -s "$home_dir/.config/floorp" "$home_dir/.floorp" &>/dev/null; then
+	echo -e "${green}created symlink for floorp${reset}"
 else
-	echo "${red}error: symlink creation failed.${reset}" >&2
+	echo -e "${red}error: symlink creation failed.${reset}" >&2
 	exit 1
+fi
+
+echo -e "${yellow}setting wallpaper with nitrogen${reset}"
+if nitrogen --set-zoom /$home_dir/Pictures/wallpaper1.png; then
+	echo -e "${green}wallpaper set.${reset}"
+else
+	echo -e "${red}failed to update wallpaper.${reset}"
+	exit 1
+fi
+
+read -p "${blue}do you want to configure display resolution? (y/n): ${reset}" configure_resolution
+if [ "$configure_resolution" != "y" ]; then
+	echo "${yellow}skipping display resolution configuration.${reset}"
+else
+	# prompt the user for display resolution
+	echo "${green}available display resolutions:${reset}"
+	xrandr | grep -w connected | awk '{print $1, $3}'
+	read -p "${blue}enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
+
+	# apply the chosen resolution
+	connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
+	for monitor in $connected_monitors; do
+		xrandr --output $monitor --mode $resolution
+	done
+
+	# confirm the applied resolution
+	echo "${blue}does the display look okay with the new resolution? (y/n)${reset}"
+	read confirm
+	if [ "$confirm" != "y" ]; then
+		echo "${red}reverting changes.${reset}"
+		exit 1
+	fi
+
+	echo "#!/bin/bash" >$home_dir/.config/screenlayout.sh
+	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution" >>$tmp_file
+	echo "${green}display resolution set to $resolution${reset}"
+	echo "${green}configuration saved to $home_dir/.config/screenlayout.sh${reset}"
+
+	chown $user_name $home_dir/.config/screenlayout.sh
+	su $user_name -c "chmod +x $home_dir/.config/screenlayout.sh"
+	echo "${green}screenlayout.sh made executable.${reset}"
 fi
 
 ##
