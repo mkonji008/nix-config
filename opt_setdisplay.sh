@@ -25,30 +25,23 @@ read -p "$(echo -e "${blue}Do you want to configure display resolution? (y/n): $
 if [ "$configure_resolution" != "y" ]; then
 	echo "${yellow}Skipping display resolution configuration.${reset}"
 else
-	echo "${green}Available display configurations:${reset}"
-	xrandr | grep -w connected | while read -r line; do
-		monitor=$(echo "$line" | awk '{print $1}')
+	echo "${green}Available display resolutions:${reset}"
+	xrandr | grep -w connected | awk '{print $1, $3}' | while read -r monitor resolution; do
 		echo "${blue}Monitor: $monitor${reset}"
-
-		read -p "${blue}Enter the desired resolution for $monitor (e.g., 1920x1080): ${reset}" resolution
-
-		read -p "${blue}Enter the desired refresh rate for $monitor (e.g., 60): ${reset}" refresh_rate
-
-		read -p "${blue}Enter the desired orientation for $monitor (normal/left/right/inverted): ${reset}" orientation
-
-		xrandr --output $monitor --mode $resolution --rate $refresh_rate --rotate $orientation
+		read -p "${blue}Enter the desired resolution for $monitor (e.g., $resolution): ${reset}" new_resolution
+		xrandr --output $monitor --mode $new_resolution
 	done
 
-	echo "${blue}Do the displays look okay with the new configurations? (y/n)${reset}"
+	echo "${blue}Does the display look okay with the new resolution? (y/n)${reset}"
 	read confirm
 	if [ "$confirm" != "y" ]; then
 		echo "${red}Reverting changes.${reset}"
 		exit 1
 	fi
 
-	config_file="$HOME/.config/screenlayout.sh"
+	config_file="$home_dir/.config/screenlayout.sh"
 	echo "#!/bin/bash" >$config_file
-	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution --rate $refresh_rate --rotate $orientation" >>$config_file
+	xrandr | grep -w connected | awk '{print "xrandr --output " $1 " --mode " $3}' >>$config_file
 	chmod +x $config_file
 
 	echo "${green}Display resolution set.${reset}"
