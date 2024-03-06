@@ -29,54 +29,23 @@ fi
 
 echo -e "${green}available monitors:${reset}"
 xrandr | grep -w connected | awk '{print $1, $3}'
-read -p "${blue}Enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
+read -p "$(echo -e "${blue}Enter the desired display resolution (e.g., 1920x1080): ${reset}")" resolution
 
-read -p "${blue}Enter the desired refresh rate (e.g., 60): ${reset}" refresh_rate
+read -p "$(echo -e "${blue}Enter the desired refresh rate (e.g., 60): ${reset}")" refresh_rate
 
-read -p "${blue}Enter the desired orientation (e.g., normal/left/right/inverted): ${reset}" orientation
+read -p "$(echo -e "${blue}Enter the desired orientation (e.g., normal/left/right/inverted): ${reset}")" orientation
 
 connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
 for monitor in $connected_monitors; do
 	xrandr --output $monitor --mode $resolution --rate $refresh_rate --rotate $orientation
 done
-
+bat $home_dir/.config/screenlayout.sh
 echo -e "${blue}Does the display look okay with the new configuration? (y/n)${reset}"
 read confirm
 if [ "$confirm" != "y" ]; then
 	echo -e "${red}Reverting changes.${reset}"
 	exit 1
 fi
-
-## works for just res
-#  read -p "$(echo -e "${blue}Do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
-#  if [ "$configure_resolution" != "y" ]; then
-#  	echo "${yellow}Skipping display resolution configuration.${reset}"
-#  	exit 0
-#  fi
-#
-#  echo "${green}Available display resolutions:${reset}"
-#  xrandr | grep -w connected | awk '{print $1, $3}'
-#  read -p "${blue}Enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
-#
-#  connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
-#  for monitor in $connected_monitors; do
-#  	xrandr --output $monitor --mode $resolution
-#  done
-#
-#  echo "${blue}Does the display look okay with the new resolution? (y/n)${reset}"
-#  read confirm
-#  if [ "$confirm" != "y" ]; then
-#  	echo "${red}Reverting changes.${reset}"
-#  	exit 1
-#  fi
-#
-#  config_file="$home_dir/.config/screenlayout.sh"
-#  echo "#!/bin/bash" >$config_file
-#  echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution" >>$config_file
-#  chmod +x $config_file
-#
-#  echo "${green}Display resolution set to $resolution.${reset}"
-#  echo "${green}Configuration saved to $config_file.${reset}"
 
 echo -e "${blue}Setting wallpaper.${reset}"
 if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper/wallpaper1.png; then

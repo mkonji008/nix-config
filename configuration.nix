@@ -244,6 +244,16 @@
     };  
 
     systemd = {
+      services.screenlayout = {
+        description = "run screenlayout.sh script at startup";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "/home/mkonji/.config/screenlayout.sh || true";
+          User = "mkonji";
+          RemainAfterExit = true;
+        };
+      }; 
       user.services.polkit-gnome-authentication-agent-1 = {
         description = "polkit-gnome-authentication-agent-1";
         wantedBy = ["graphical-session.target"];
