@@ -27,15 +27,10 @@ if [ "$configure_resolution" = "y" ]; then
 	xrandr | grep -w connected | while read -r line; do
 		monitor=$(echo "$line" | awk '{print $1}')
 		echo -e "${blue}Monitor: $monitor${reset}"
-		echo -e "${green}Available modes:${reset}"
-		xrandr | grep -w "$monitor" | awk '{print $1, $2, $3}'
 		read -p "${blue}Enter the desired mode (e.g., 1920x1080): ${reset}" mode
-		echo -e "${green}Available refresh rates:${reset}"
-		xrandr | grep -w "$monitor" | awk '{print $1, $3}' | grep -o '[0-9]*\.[0-9]*'
 		read -p "${blue}Enter the refresh rate (e.g., 60): ${reset}" refresh_rate
-		read -p "${blue}Enter the orientation (normal/left/right/inverted): ${reset}" orientation
 
-		xrandr --output $monitor --mode $mode --rate $refresh_rate --rotate $orientation
+		xrandr --output $monitor --mode $mode --rate $refresh_rate
 	done
 
 	echo -e "${blue}Do the displays look okay with the new configurations? (y/n)${reset}"
