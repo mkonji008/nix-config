@@ -197,7 +197,7 @@ fi
 echo -e "${green}git globals configured successfully.${reset}"
 
 ##
-echo "${green}create symlink for floorp $home_dir ${reset}"
+echo -e "${green}create symlink for floorp $home_dir ${reset}"
 if ln -s "$home_dir/.config/floorp" "$home_dir/.floorp" &>/dev/null; then
 	echo -e "${green}created symlink for floorp${reset}"
 else
@@ -206,7 +206,7 @@ else
 fi
 
 echo -e "${yellow}setting wallpaper with nitrogen${reset}"
-if nitrogen --set-zoom /$home_dir/Pictures/wallpaper1.png; then
+if nitrogen --set-zoom $home_dir/Pictures/wallpaper1.png; then
 	echo -e "${green}wallpaper set.${reset}"
 else
 	echo -e "${red}failed to update wallpaper.${reset}"
