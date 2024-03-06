@@ -71,7 +71,6 @@ if [ "$configure_resolution" = "y" ]; then
 else
 	echo -e "${yellow}Skipping display resolution configuration.${reset}"
 fi
-
 echo -e "${blue}Setting wallpaper.${reset}"
 if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper1.png; then
 	echo -e "${red}Error setting wallpaper.${reset}"
