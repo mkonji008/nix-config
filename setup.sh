@@ -147,6 +147,14 @@ else
 fi
 
 ##
+echo -e "${green}create symlink for floorp $home_dir${reset}"
+if su $user_name -c "ln -sfn \"$home_dir/.config/floorp\" \"$home_dir/.floorp\""; then
+	echo -e "${green}created symlink for floorp${reset}"
+else
+	echo -e "${red}error: symlink creation failed.${reset}" >&2
+fi
+
+##
 echo -e "${yellow}changing ownership of $home_dir${reset}"
 if chown -R "$user_name" "$home_dir"; then
 	echo -e "${green}ownership changed.${reset}"
@@ -195,54 +203,6 @@ if [ "$verify" != "y" ]; then
 fi
 
 echo -e "${green}git globals configured successfully.${reset}"
-
-##
-echo -e "${green}create symlink for floorp $home_dir ${reset}"
-if ln -s "$home_dir/.config/floorp" "$home_dir/.floorp" &>/dev/null; then
-	echo -e "${green}created symlink for floorp${reset}"
-else
-	echo -e "${red}error: symlink creation failed.${reset}" >&2
-fi
-
-echo -e "${yellow}setting wallpaper with nitrogen${reset}"
-if nitrogen --set-zoom $home_dir/Pictures/wallpaper1.png; then
-	echo -e "${green}wallpaper set.${reset}"
-else
-	echo -e "${red}failed to update wallpaper.${reset}"
-fi
-
-read -p "${blue}do you want to configure display resolution? (y/n): ${reset}" configure_resolution
-if [ "$configure_resolution" != "y" ]; then
-	echo "${yellow}skipping display resolution configuration.${reset}"
-else
-	# prompt the user for display resolution
-	echo "${green}available display resolutions:${reset}"
-	xrandr | grep -w connected | awk '{print $1, $3}'
-	read -p "${blue}enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
-
-	# apply the chosen resolution
-	connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
-	for monitor in $connected_monitors; do
-		xrandr --output $monitor --mode $resolution
-	done
-
-	# confirm the applied resolution
-	echo "${blue}does the display look okay with the new resolution? (y/n)${reset}"
-	read confirm
-	if [ "$confirm" != "y" ]; then
-		echo "${red}reverting changes.${reset}"
-		exit 1
-	fi
-
-	echo "#!/bin/bash" >$home_dir/.config/screenlayout.sh
-	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution" >>$tmp_file
-	echo "${green}display resolution set to $resolution${reset}"
-	echo "${green}configuration saved to $home_dir/.config/screenlayout.sh${reset}"
-
-	chown $user_name $home_dir/.config/screenlayout.sh
-	su $user_name -c "chmod +x $home_dir/.config/screenlayout.sh"
-	echo "${green}screenlayout.sh made executable.${reset}"
-fi
 
 ##
 echo -e "${green}configuration updated, system rebuilt, neovim configuration cloned, and dotfiles copied successfully..hopefully <3${reset}"
