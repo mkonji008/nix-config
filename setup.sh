@@ -202,7 +202,6 @@ if ln -s "$home_dir/.config/floorp" "$home_dir/.floorp" &>/dev/null; then
 	echo -e "${green}created symlink for floorp${reset}"
 else
 	echo -e "${red}error: symlink creation failed.${reset}" >&2
-	exit 1
 fi
 
 echo -e "${yellow}setting wallpaper with nitrogen${reset}"
@@ -210,7 +209,6 @@ if nitrogen --set-zoom $home_dir/Pictures/wallpaper1.png; then
 	echo -e "${green}wallpaper set.${reset}"
 else
 	echo -e "${red}failed to update wallpaper.${reset}"
-	exit 1
 fi
 
 read -p "${blue}do you want to configure display resolution? (y/n): ${reset}" configure_resolution
