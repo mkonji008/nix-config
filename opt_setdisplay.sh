@@ -24,29 +24,32 @@ home_dir="/home/$user_name"
 read -p "$(echo -e "${blue}Do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
 if [ "$configure_resolution" != "y" ]; then
 	echo "${yellow}Skipping display resolution configuration.${reset}"
-else
-	echo "${green}Available display resolutions:${reset}"
-	xrandr | grep -w connected | awk '{print $1, $3}' | while read -r monitor resolution; do
-		echo "${blue}Monitor: $monitor${reset}"
-		read -p "${blue}Enter the desired resolution for $monitor (e.g., $resolution): ${reset}" new_resolution
-		xrandr --output $monitor --mode $new_resolution
-	done
-
-	echo "${blue}Does the display look okay with the new resolution? (y/n)${reset}"
-	read confirm
-	if [ "$confirm" != "y" ]; then
-		echo "${red}Reverting changes.${reset}"
-		exit 1
-	fi
-
-	config_file="$home_dir/.config/screenlayout.sh"
-	echo "#!/bin/bash" >$config_file
-	xrandr | grep -w connected | awk '{print "xrandr --output " $1 " --mode " $3}' >>$config_file
-	chmod +x $config_file
-
-	echo "${green}Display resolution set.${reset}"
-	echo "${green}Configuration saved to $config_file${reset}"
+	exit 0
 fi
+
+echo "${green}Available display resolutions:${reset}"
+xrandr | grep -w connected | awk '{print $1, $3}'
+read -p "${blue}Enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
+
+connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
+for monitor in $connected_monitors; do
+	xrandr --output $monitor --mode $resolution
+done
+
+echo "${blue}Does the display look okay with the new resolution? (y/n)${reset}"
+read confirm
+if [ "$confirm" != "y" ]; then
+	echo "${red}Reverting changes.${reset}"
+	exit 1
+fi
+
+config_file="$home_dir/.config/screenlayout.sh"
+echo "#!/bin/bash" >$config_file
+xrandr | grep -w connected | awk '{print "xrandr --output " $1 " --mode " $3}' >>$config_file
+chmod +x $config_file
+
+echo "${green}Display resolution set.${reset}"
+echo "${green}Configuration saved to $config_file${reset}"
 
 echo -e "${blue}Setting wallpaper.${reset}"
 if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper/wallpaper1.png; then
