@@ -41,7 +41,7 @@ for monitor in $connected_monitors; do
 done
 
 config_file="$home_dir/.config/screenlayout.sh"
-echo "#!usr/bin/env bash" >$config_file
+echo "#!/usr/bin/env bash" >$config_file
 echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution --rate $refresh_rate --rotate $orientation" >>$config_file
 chmod +x $config_file
 

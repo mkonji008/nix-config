@@ -147,6 +147,7 @@
    gcc
    git
    gnome.gnome-keyring
+   
    gnugrep
    gnumake
    go
@@ -208,6 +209,25 @@
    yamllint
    zathura
    zip
+ # themes
+   shades-of-gray-theme
+   onestepback
+   gruvbox-dark-gtk
+   gruvbox-gtk-theme
+   xfce.xfwm4-themes
+ # icons
+   numix-icon-theme
+   oranchelo-icon-theme
+   gruvbox-plus-icons
+   gruvbox-dark-icons-gtk
+   material-black-colors
+ # cursors
+   material-cursors
+   xorg.xcursorthemes
+   vimix-cursors
+   simp1e-cursors
+   phinger-cursors
+
  #(compile errors)  rustdesk
   ];
 
