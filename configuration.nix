@@ -10,6 +10,7 @@
 
   hardware.opengl.driSupport32Bit = true;
   hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio.enable = true;
 
   boot = {
     kernelParams = ["nohibernate"];
