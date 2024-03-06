@@ -29,7 +29,7 @@ font pango:FiraMono Nerd Font Bold 9
 exec --no-startup-id dex --autostart --environment i3 &
 
 # set display resolution and refresh rate
-exec --no-startup-id /home/mkonji/.config/screenlayout/desktop-dual.sh &
+exec --no-startup-id /home/mkonji/.config/screenlayout.sh &
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -82,7 +82,7 @@ floating_modifier $mod
 bindsym $mod+Shift+w exec qutebrowser
 
 # mozilla firefox
-bindsym $mod+w exec firefox
+bindsym $mod+w exec floorp
 
 # file manager
 bindsym $mod+e exec thunar
