@@ -21,31 +21,38 @@ fi
 
 home_dir="/home/$user_name"
 
-read -p "$(echo -e "${blue}do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
+read -p "$(echo -e "${blue}Do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
 if [ "$configure_resolution" != "y" ]; then
-	echo "${yellow}skipping display resolution configuration.${reset}"
+	echo "${yellow}Skipping display resolution configuration.${reset}"
 else
-	# prompt the user for display resolution
-	echo "${green}available display resolutions:${reset}"
-	xrandr | grep -w connected | awk '{print $1, $3}'
-	read -p "${blue}enter the desired display resolution (e.g., 1920x1080): ${reset}" resolution
-	# apply the chosen resolution
-	connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
-	for monitor in $connected_monitors; do
-		xrandr --output $monitor --mode $resolution
+	echo "${green}Available display configurations:${reset}"
+	xrandr | grep -w connected | while read -r line; do
+		monitor=$(echo "$line" | awk '{print $1}')
+		echo "${blue}Monitor: $monitor${reset}"
+
+		read -p "${blue}Enter the desired resolution for $monitor (e.g., 1920x1080): ${reset}" resolution
+
+		read -p "${blue}Enter the desired refresh rate for $monitor (e.g., 60): ${reset}" refresh_rate
+
+		read -p "${blue}Enter the desired orientation for $monitor (normal/left/right/inverted): ${reset}" orientation
+
+		xrandr --output $monitor --mode $resolution --rate $refresh_rate --rotate $orientation
 	done
-	# confirm the applied resolution
-	echo "${blue}does the display look okay with the new resolution? (y/n)${reset}"
+
+	echo "${blue}Do the displays look okay with the new configurations? (y/n)${reset}"
 	read confirm
 	if [ "$confirm" != "y" ]; then
-		echo "${red}reverting changes.${reset}"
+		echo "${red}Reverting changes.${reset}"
 		exit 1
 	fi
-	echo "#!/bin/bash" >$home_dir/.config/screenlayout.sh
-	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution" >>$tmp_file
-	echo "${green}display resolution set to $resolution${reset}"
-	echo "${green}configuration saved to $home_dir/.config/screenlayout.sh${reset}"
-	echo "${green}screenlayout.sh made executable.${reset}"
+
+	config_file="$HOME/.config/screenlayout.sh"
+	echo "#!/bin/bash" >$config_file
+	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution --rate $refresh_rate --rotate $orientation" >>$config_file
+	chmod +x $config_file
+
+	echo "${green}Display resolution set.${reset}"
+	echo "${green}Configuration saved to $config_file${reset}"
 fi
 
 echo -e "${blue}Setting wallpaper.${reset}"
