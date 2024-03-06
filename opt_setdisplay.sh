@@ -21,7 +21,7 @@ fi
 
 home_dir="/home/$user_name"
 
-read -p "$(echo -c "${yellow}Do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
+read -p "$(echo -e "${yellow}Do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
 if [ "$configure_resolution" = "y" ]; then
 	echo -e "${blue}Available display configurations:${reset}"
 	xrandr | grep -w connected | while read -r line; do
