@@ -21,7 +21,7 @@ fi
 
 home_dir="/home/$user_name"
 
-read -p "${blue}do you want to configure display resolution? (y/n): ${reset}" configure_resolution
+read -p "$(echo -e "${blue}do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
 if [ "$configure_resolution" != "y" ]; then
 	echo "${yellow}skipping display resolution configuration.${reset}"
 else
@@ -45,12 +45,10 @@ else
 	echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution" >>$tmp_file
 	echo "${green}display resolution set to $resolution${reset}"
 	echo "${green}configuration saved to $home_dir/.config/screenlayout.sh${reset}"
-	chown $user_name $home_dir/.config/screenlayout.sh
-	su $user_name -c "chmod +x $home_dir/.config/screenlayout.sh"
 	echo "${green}screenlayout.sh made executable.${reset}"
 fi
 
 echo -e "${blue}Setting wallpaper.${reset}"
-if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper3.jpg; then
+if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper/wallpaper1.png; then
 	echo -e "${red}Error setting wallpaper.${reset}"
 fi
