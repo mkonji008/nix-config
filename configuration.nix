@@ -147,7 +147,6 @@
    gcc
    git
    gnome.gnome-keyring
-   
    gnugrep
    gnumake
    go
@@ -156,6 +155,7 @@
    gzip
    htop
    i3
+   image-roll
    kdePackages.kdeconnect-kde
    libgcc
    libreoffice
@@ -210,24 +210,23 @@
    zathura
    zip
  # themes
-   shades-of-gray-theme
-   onestepback
    gruvbox-dark-gtk
    gruvbox-gtk-theme
+   onestepback
+   shades-of-gray-theme
    xfce.xfwm4-themes
  # icons
+   gruvbox-dark-icons-gtk
+   gruvbox-plus-icons
+   material-black-colors
    numix-icon-theme
    oranchelo-icon-theme
-   gruvbox-plus-icons
-   gruvbox-dark-icons-gtk
-   material-black-colors
  # cursors
    material-cursors
-   xorg.xcursorthemes
-   vimix-cursors
-   simp1e-cursors
    phinger-cursors
-
+   simp1e-cursors
+   vimix-cursors
+   xorg.xcursorthemes
  #(compile errors)  rustdesk
   ];
 
