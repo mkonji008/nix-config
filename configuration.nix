@@ -137,6 +137,7 @@
    font-manager
    fontconfig
    fuse-common
+   fzf
    gcc
    git
    gnome.gnome-keyring
