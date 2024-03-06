@@ -170,4 +170,32 @@ else
 fi
 
 ##
+su -l $user_name -c "
+
+read -p 'enter your git username: ' git_username
+read -p 'enter your git email: ' git_email
+read -p 'enter your text editor for git (e.g., nvim, emacs): ' git_editor
+
+git config --global user.name \"\$git_username\" && \
+git config --global user.email \"\$git_email\" && \
+git config --global core.editor \"\$git_editor\"
+
+if [ \$? -ne 0 ]; then
+    echo 'error: failed to configure git globals'
+    exit 1
+fi
+
+cat ~/.gitconfig
+"
+
+read -p "is the configuration correct? (y/n): " verify
+
+if [ "$verify" != "y" ]; then
+	echo "configuration not confirmed. exiting."
+	exit 1
+fi
+
+echo "Git globals configured successfully."
+
+##
 echo "configuration updated, system rebuilt, neovim configuration cloned, and dotfiles copied successfully..hopefully <3"
