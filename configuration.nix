@@ -29,14 +29,15 @@
   time.timeZone = "America/New_York";
 
   i18n.defaultLocale = "en_US.UTF-8";
-
+  
   i18n.inputMethod.enabled = "fcitx5";
-  i18n.inputMethod.fcitx5.addons = {
-      pkgs.fcitx5-mozc
-      pkgs.fcitx5-gtk
-      pkgs.fcitx5-configtool
-    }; 
+  i18n.inputMethod.fcitx5.addons = [
+        pkgs.fcitx5-mozc
+        pkgs.fcitx5-gtk
+        pkgs.fcitx5-configtool
+    ]; 
   environment.variables.GLFW_IM_MODULE = "ibus";
+
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
