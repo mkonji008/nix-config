@@ -6,6 +6,11 @@
       ./hardware-configuration.nix
     ];
 
+  documentation.nixos.enable = false;
+
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
+
   boot = {
     kernelParams = ["nohibernate"];
     tmp.cleanOnBoot = true;
