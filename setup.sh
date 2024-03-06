@@ -148,7 +148,7 @@ fi
 
 ##
 echo -e "${green}create symlink for floorp $home_dir${reset}"
-if su $user_name -c "ln -sfn \"$home_dir/.config/floorp\" \"$home_dir/.floorp\""; then
+if su $user_name -c "ln -sfn \"$home_dir/.config/.floorp\" \"$home_dir/.floorp\""; then
 	echo -e "${green}created symlink for floorp${reset}"
 else
 	echo -e "${red}error: symlink creation failed.${reset}" >&2
