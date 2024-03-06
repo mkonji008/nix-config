@@ -39,6 +39,12 @@ connected_monitors=$(xrandr | grep -w connected | awk '{print $1}')
 for monitor in $connected_monitors; do
 	xrandr --output $monitor --mode $resolution --rate $refresh_rate --rotate $orientation
 done
+
+config_file="$home_dir/.config/screenlayout.sh"
+echo "#!usr/bin/usr bash" >$config_file
+echo "xrandr --output $(xrandr | grep -w connected | awk '{print $1}') --mode $resolution --rate $refresh_rate --rotate $orientation" >>$config_file
+chmod +x $config_file
+
 bat $home_dir/.config/screenlayout.sh
 echo -e "${blue}Does the display look okay with the new configuration? (y/n)${reset}"
 read confirm
@@ -46,6 +52,8 @@ if [ "$confirm" != "y" ]; then
 	echo -e "${red}Reverting changes.${reset}"
 	exit 1
 fi
+
+bat $home_dir/.config/screenlayout.sh
 
 echo -e "${blue}Setting wallpaper.${reset}"
 if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper/wallpaper1.png; then
