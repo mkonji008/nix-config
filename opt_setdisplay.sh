@@ -35,7 +35,7 @@ if [ "$configure_resolution" = "y" ]; then
 		read -p "${blue}Enter the refresh rate (e.g., 60): ${reset}" refresh_rate
 		read -p "${blue}Enter the orientation (normal/left/right/inverted): ${reset}" orientation
 
-		xrandr --output $monitor --mode $mode --rate $refresh_rate
+		xrandr --output $monitor --mode $mode --rate $refresh_rate --rotate $orientation
 	done
 
 	echo -e "${blue}Do the displays look okay with the new configurations? (y/n)${reset}"
@@ -55,7 +55,7 @@ if [ "$configure_resolution" = "y" ]; then
 
 	xrandr | grep -w connected | while read -r line; do
 		monitor=$(echo "$line" | awk '{print $1}')
-		echo "xrandr --output $monitor --mode $mode --rate $refresh_rate" >>$tmp_file
+		echo "xrandr --output $monitor --mode $mode --rate $refresh_rate --rotate $orientation" >>$tmp_file
 	done
 
 	cp $tmp_file $home_dir/.config/screenlayout.sh
