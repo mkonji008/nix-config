@@ -101,7 +101,7 @@ fi
 
 ##
 echo -e "${yellow}removing existing neovim configuration directory...${reset}"
-if rm -rf "$home_dir/code/dots/neovim-config" && rf -rf "$home_dir/.local/share/nvim"; then
+if rm -rf "$home_dir/code/dots/neovim-config" && rm -rf "$home_dir/.local/share/nvim"; then
 	echo -e "${green}directory removed successfully.${reset}"
 else
 	echo -e "${red}failed to remove directory.${reset}"
