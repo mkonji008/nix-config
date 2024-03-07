@@ -78,6 +78,7 @@ read -p "$(echo -e "${blue}setup oh-my-bash? (y/n) ${reset}")" setup_omb
 
 if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
 	doas -u $user_name bash -c 'bash -c "$(wget https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh -O -)" &'
+	wait
 
 	while [[ $(jobs | wc -l) -gt 0 ]]; do
 		sleep 1
@@ -100,7 +101,7 @@ fi
 
 ##
 echo -e "${yellow}removing existing neovim configuration directory...${reset}"
-if rm -rf "$home_dir/code/dots/neovim-config"; then
+if rm -rf "$home_dir/code/dots/neovim-config" && rf -rf "$home_dir/.local/share/nvim"; then
 	echo -e "${green}directory removed successfully.${reset}"
 else
 	echo -e "${red}failed to remove directory.${reset}"

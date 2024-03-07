@@ -227,6 +227,7 @@
    simp1e-cursors
    vimix-cursors
    xorg.xcursorthemes
+   capitaine-cursors
  #(compile errors)  rustdesk
   ];
 
