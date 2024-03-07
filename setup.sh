@@ -95,7 +95,7 @@ else
 
 fi
 if [ "$setup_omb" != "${setup_omb#[Yy]}" ]; then
-	cp -f $bashrc $home_dir/.bashrc
+	sleep 15 && cp -f $bashrc $home_dir/.bashrc
 	echo -e "${green}copied .bashrc to $home_dir${reset}"
 fi
 
