@@ -55,6 +55,6 @@ fi
 
 ##
 echo -e "${blue}setting wallpaper.${reset}"
-if ! nitrogen --set-zoom $home_dir/Pictures/wallpaper/wallpaper1.png; then
+if ! nitrogen --set-scaled $home_dir/Pictures/wallpaper/wallpaper1.png; then
 	echo -e "${red}error setting wallpaper.${reset}"
 fi
