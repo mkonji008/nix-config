@@ -24,7 +24,6 @@ home_dir="/home/$user_name"
 read -p "$(echo -e "${blue}do you want to configure display resolution? (y/n): ${reset}")" configure_resolution
 if [ "$configure_resolution" != "y" ]; then
 	echo -e "${yellow}skipping display resolution configuration.${reset}"
-	exit 0
 fi
 
 echo -e "${green}available monitors:${reset}"
