@@ -155,7 +155,6 @@
    gzip
    htop
    i3
-   image-roll
    kdePackages.kdeconnect-kde
    libgcc
    libreoffice
@@ -202,6 +201,7 @@
    xarchiver
    xclip
    xdg-desktop-portal-gtk
+   xfce.ristretto
    xfce.thunar
    xfce.xfce4-terminal
    xfce.xfconf

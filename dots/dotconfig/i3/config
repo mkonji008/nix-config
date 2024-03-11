@@ -78,11 +78,11 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# qutebrowser
-bindsym $mod+Shift+w exec qutebrowser
-
-# mozilla firefox
+# main browser
 bindsym $mod+w exec floorp
+
+# alt browser
+bindsym $mod+Shift+w exec qutebrowser
 
 # file manager
 bindsym $mod+e exec thunar
@@ -101,7 +101,7 @@ bindsym $mod+Shift+q exec xkill
 # lock the display
 bindsym $mod+Shift+Escape exec i3lock
 
-# start dmenu (a program launcher)
+# start dmenu
 bindsym $mod+Shift+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#83A598' -sf '#EEEEEE' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
 # A more modern dmenu replacement is rofi:
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -line-padding 4 \

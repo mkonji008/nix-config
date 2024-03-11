@@ -1,0 +1,79 @@
+configuration {
+	modi:				"drun";
+	font:				"Rubik 20";
+	display-drun: 			"";
+	sidebar-mode: 			false;
+}
+
+@theme "/dev/null"
+
+* {
+	bg:				#b5b5aa;
+	fg:				#2b2b2b;
+	button:				#9e9e95;
+
+	background-color:		@bg;
+	text-color:			@fg;
+}
+
+window {
+	transparency:                   "real";
+	border-radius:                  1px;
+	width:			    	40%;
+	y-offset:                       -350px;
+	padding: 			10px;
+	location: 			south;
+}
+
+prompt { enabled: false; }
+
+entry {
+	placeholder:			"Search";
+	expand:                         true;
+	padding:                        5px 1% 5px 1%;
+	background-color:               @button;
+        placeholder-color:              @fg;
+}
+
+inputbar {
+	children: 			[ prompt, entry ];
+	background-color:               @button;
+	text-color:                     @fg;
+	expand:                         false;
+	border-radius:                  8px;
+	padding:                        8px;
+}
+
+listview {
+	columns:                        1;
+	lines:	                        14;
+	cycle:                          false;
+	dynamic:                        true;
+	layout:                         vertical;
+}
+
+mainbox {
+	children:                       [ inputbar, listview ];
+	spacing:                       	1%;
+	padding:                        1% 1% 2% 1%;
+}
+
+element {
+	orientation:                    horizontal;
+	border-radius:                  0%;
+	padding:                        0% 0% 0.5% 0%;
+}
+
+element-text {
+	expand:                         true;
+	vertical-align:                 0.5;
+	margin:                         0.5% 0.5% 0% 1%;
+	background-color:               inherit;
+        text-color:                     inherit;
+}
+
+element selected {
+	background-color:               @fg;
+	text-color:                     @bg;
+	border-radius:                  1px;
+}
