@@ -116,119 +116,189 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [ 
-   ansible
-   arandr
-   bat
-   bat
-   bitwarden-desktop
-   btop
-   bzip3
-   cargo
-   clang-tools_9
-   cmake
-   cmus
-   copyq
-   curl
-   dex
-   doas
-   dosfstools
-   dunst
-   elinks
-   eza
-   filezilla
-   flameshot
-   flatpak
-   floorp
-   font-manager
-   fontconfig
-   fuse-common
-   fzf
-   gcc
-   git
-   gnome.gnome-keyring
-   gnugrep
-   gnumake
-   go
-   google-drive-ocamlfuse
-   gparted
-   gzip
-   htop
-   i3
-   kdePackages.kdeconnect-kde
-   libgcc
-   libreoffice
-   lxappearance
-   mlocate
-   mplayer
-   neofetch
-   neovim
-   networkmanager-openvpn
-   networkmanagerapplet
-   nitrogen
-   nodePackages.npm
-   nodejs_21
-   openssl
-   os-prober
-   p7zip
-   pavucontrol
-   picom
-   polkit_gnome
-   protonup-ng
-   pulseaudioFull
-   python3
-   qemu
-   qutebrowser
-   ranger
-   rar
-   remmina
-   ripgrep
-   rofi
-   rustc
-   steam
-   steam-run
-   terraform
-   tldr
-   tmux
-   trash-cli
-   unzip
-   usbutils
-   virt-manager
-   vlc
-   w3m
-   w3m
-   wget
-   xarchiver
-   xclip
-   xdg-desktop-portal-gtk
-   xfce.ristretto
-   xfce.thunar
-   xfce.xfce4-terminal
-   xfce.xfconf
-   xz
-   yamllint
-   zathura
-   zip
- # themes
-   gruvbox-dark-gtk
-   gruvbox-gtk-theme
-   onestepback
-   shades-of-gray-theme
-   xfce.xfwm4-themes
- # icons
-   gruvbox-dark-icons-gtk
-   gruvbox-plus-icons
-   material-black-colors
-   numix-icon-theme
-   oranchelo-icon-theme
- # cursors
-   material-cursors
-   phinger-cursors
-   simp1e-cursors
-   vimix-cursors
-   xorg.xcursorthemes
-   capitaine-cursors
- #(compile errors)  rustdesk
+  environment.systemPackages = with pkgs; [
+  # mainApplications
+    # optWork
+        zoom-us
+        slack
+        teams-for-linux
+    # browsers
+        #brave
+        floorp 
+        qutebrowser
+    # media
+        vlc
+        mplayer
+        cmus
+        strawberry
+        foliate
+        zathura
+        ffmpeg #codec
+    # editing
+        krita
+        darktable
+        kdePackages.kdenlive
+    # office 
+        libreoffice
+        obsidian
+    # misc
+        bitwarden-desktop 
+        tutanota-desktop
+        filezilla
+    # downloading
+        deluge-gtk
+        yt-dlp
+        tartube
+    # keyboard
+        vial
+        via
+        qmk
+    #personalNonDev
+         # optGame
+            #heroic-unwrapped
+            #lutris-unwrapped
+            #openmw
+            #protonup-ng
+            #protonup-qt
+            #steam
+            #steam-run
+         # optDiscUtils
+            #kdePackages.k3b
+         # chat
+            #discord
+            #signal-desktop
+  # devPackages
+      # devTools
+         ansible
+         terraform
+         #terraform-providers.ansible
+         #terraform-providers.helm
+         #terraform-providers.
+         #terraform-providers.vault
+         #terraform-providers.postgresql
+         #terraform-providers.dns
+         #terraform-providers.aws
+         #terraform-providers.google
+         #terraform-providers.utils
+         terraformer
+         terraform-inventory
+         virt-manager
+         rancher
+         k3d
+         kargo
+         #docker
+         #docker-compose
+         podman
+         podman-tui
+         podman-compose
+         pods
+         distrobox
+         awscli2
+         plumber
+      # langsRelated-req
+         cargo
+         clang-tools_9
+         gcc
+         go
+         libgcc
+         nodePackages.npm
+         nodejs_21
+         python3
+         yamllint
+         rustc
+         cmake
+  # baseSystem-req
+      arandr
+      git
+      rsync
+      timeshift-unwrapped
+      psmisc
+      cron
+      bat
+      btop
+      bzip3
+      flameshot
+      copyq
+      curl
+      dex
+      doas
+      dosfstools
+      dunst
+      elinks
+      eza
+      filezilla
+      flatpak
+      font-manager
+      fontconfig
+      fuse-common
+      fzf
+      gnome.gnome-keyring
+      gnugrep
+      gnumake
+      google-drive-ocamlfuse
+      gparted
+      gzip
+      htop
+      i3
+      kdePackages.kdeconnect-kde
+      lxappearance
+      mlocate
+      neofetch
+      neovim
+      networkmanager-openvpn
+      networkmanagerapplet
+      nitrogen
+      openssl
+      os-prober
+      p7zip
+      pavucontrol
+      picom
+      polkit_gnome
+      pulseaudioFull
+      qemu
+      ranger
+      rar
+      remmina
+      ripgrep
+      rofi
+      tldr
+      tmux
+      trash-cli
+      unzip
+      usbutils
+      w3m
+      wget
+      xarchiver
+      xclip
+      xdg-desktop-portal-gtk
+      xfce.ristretto
+      xfce.thunar
+      xfce.xfce4-terminal
+      xfce.xfconf
+      xz
+      zip
+     # themes
+         gruvbox-dark-gtk
+         gruvbox-gtk-theme
+         onestepback
+         shades-of-gray-theme
+         xfce.xfwm4-themes
+     # icons
+         gruvbox-dark-icons-gtk
+         gruvbox-plus-icons
+         material-black-colors
+         numix-icon-theme
+         oranchelo-icon-theme
+     # cursors
+         capitaine-cursors
+         material-cursors
+         phinger-cursors
+         simp1e-cursors
+         vimix-cursors
+         xorg.xcursorthemes
+   #(compile errors) use flatpak
+      #rustdesk
+      #vault
   ];
 
   console = {
