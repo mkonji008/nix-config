@@ -19,6 +19,17 @@ if ! id -u "$user_name" &>/dev/null; then
 	exit 1
 fi
 
+if [ "$user_name" = "mkonji" ]; then
+	echo -e "${yellow}skipping replacement since username is mkonji.${reset}"
+fi
+
+if ! find "/home/$user_name/nix/config/" -type -name '.git' -prune -o -type f ! -name 'setup.sh' -exec sed -i "/mkonji/! s/mkonji/$user_name/g" {} +; then
+	echo -e "${red}error:${reset} failed to find and replace mkonji w/$user_name."
+	exit 1
+fi
+
+echo -e "${green}change username in dotfiles to $user_name completed successfully.${reset}"
+
 home_dir="/home/$user_name"
 
 ##
