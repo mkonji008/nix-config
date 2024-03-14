@@ -6,24 +6,25 @@ NixOS + i3, desktop set up for development
 
 1.  Perform a minimal install with no desktop, either with the minimal iso or gui ensuring that root user is enabled.
 2.  Once that is completed after reboot, log in to the tty and run- <br>
-    `nix-shell -p git`<br>
+    **`nix-shell -p git`**<br>
     _This will temporary install git to be able to pull down the repo._
 3.  once that completes run- <br>
-    `git clone https://github.com/mkonji008/nix-config`
+    **`git clone https://github.com/mkonji008/nix-config`**
 4.  cd into **nix-config** and verify the packages in **configuration.nix**. By default I have it set to for my personal dev-box. There are also packages for a more full featured system with a touch of uncommenting.
 5.  Once packages have been verified, jump into root/su <br>
     as root user, execute setup <br>
-    `./setup.sh`
+    **`./setup.sh`** <br>
 
-        This will prompt for a few things along the way, ask for username, auto set up home dir, copy dotfiles, change to nix-unstable channel, set up oh-my-bash, pull down and copy my personal neovim dotfiles from repo, copy configuration.nix, set up git config.<br>
+    This will prompt for a few things along the way, ask for username, auto set up home dir, copy dotfiles, change to nix-unstable channel, set up oh-my-bash, pull down and copy my personal neovim dotfiles from repo, copy configuration.nix, set up git config.<br>
 
 6.  Reboot the system and you should be greeted with a login manager - **lightdm**
 7.  Once logged in **super+enter** opens a terminal, to view i3 hotkeys run<br>
-    `bat ~/.config/i3/config`<br> I will also include hotkeys and navigation at the end of this README.
+    **`bat ~/.config/i3/config`**<br> **_I will also include hotkeys and navigation at the end of this README._**<br>
+
     Assuming some window manager knowledge but this uses rofi to open files **super+d** and to see the bar it's expecting **super** key to be held to be visible.
 
 8.  There is an optional script to define monitors and prompt for desired resolution for a multi monitor setup. The script is called<br>
-    `opt_setdisplay.sh` <br>
+    **`opt_setdisplay.sh`** <br>
     One may also just use the gui tool arandr or xrandr for cli.
 
 **TODO:** create find and replace for setup task to replace all instances of mkonji with the username entered in the **setup** script.<br>
