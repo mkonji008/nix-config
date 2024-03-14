@@ -138,6 +138,7 @@
         krita
         darktable
         kdePackages.kdenlive
+        upscayl
     # office 
         libreoffice
         obsidian
@@ -209,16 +210,11 @@
          cmake
   # baseSystem-req
       arandr
-      git
-      rsync
-      timeshift-unwrapped
-      psmisc
-      cron
       bat
       btop
       bzip3
-      flameshot
       copyq
+      cron
       curl
       dex
       doas
@@ -227,11 +223,13 @@
       elinks
       eza
       filezilla
+      flameshot
       flatpak
       font-manager
       fontconfig
       fuse-common
       fzf
+      git
       gnome.gnome-keyring
       gnugrep
       gnumake
@@ -254,6 +252,7 @@
       pavucontrol
       picom
       polkit_gnome
+      psmisc
       pulseaudioFull
       qemu
       ranger
@@ -261,6 +260,9 @@
       remmina
       ripgrep
       rofi
+      rsync
+      syncthing
+      timeshift-unwrapped
       tldr
       tmux
       trash-cli
