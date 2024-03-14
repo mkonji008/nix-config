@@ -23,7 +23,7 @@ if [ "$user_name" = "mkonji" ]; then
 	echo -e "${yellow}skipping replacement since username is mkonji.${reset}"
 fi
 
-if ! find "/home/$user_name/nix/config/" -type -name '.git' -prune -o -type f ! -name 'setup.sh' -exec sed -i "/mkonji/! s/mkonji/$user_name/g" {} +; then
+if ! find "/home/$user_name/nix/config/" -type d -name '.git' -prune -o -type f ! -name 'setup.sh' -exec sed -i "/mkonji/! s/mkonji/$user_name/g" {} +; then
 	echo -e "${red}error:${reset} failed to find and replace mkonji w/$user_name."
 	exit 1
 fi
