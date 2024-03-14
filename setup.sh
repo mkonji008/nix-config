@@ -21,30 +21,30 @@ fi
 
 ##
 function exclude_files() {
-	local overlook="$1"
-	if [[ "$overlook" == ".git" || "$overlook" == "setup.sh" ]]; then
+	local omit_me="$1"
+	if [[ "$omit_me" == ".git" || "$omit_me" == "setup.sh" ]]; then
 		return 1
 	else
 		return 0
 	fi
 }
 
-if [[ "$user_name" == "mkonji" ]]; then
-	echo -e "${red}skipping task for user: $user_name${reset}"
+if [[ "$current_user" == "mkonji" ]]; then
+	echo -e "${yellow}skipping task for user: $current_user${reset}"
 	exit 0
 fi
 
 replaceme_dir="/home/$user_name/nix-config"
 
-for file in "$replaceme_dir"/*; do
-	if [[ -f "$overlook" && $(exclude_files "$(basename "$overlook")") -eq 0 ]]; then
-		echo -e "${yellow}processing file: $overlook${reset}"
-
-		sed -i "s/mkonji/$user_name/g" "$overlook"
-
-		echo -e "${green}Replacement completed in $replaceme_dir${reset}"
-	fi
-done
+find "$replaceme_dir" -type f -not -path "*/.git/*" -not -name "setup.sh" -exec bash -c '
+  for file do
+    if [[ -f "$omit_me" && $(exclude_files "$(basename "$omit_me")") -eq 0 ]]; then
+      echo -e "${yellow}Processing file: $omit_me${reset}"
+      sed -i "s/mkonji/$user_name/g" "$omit_me"
+      echo -e "${green}Replacement completed in $replaceme_dir${reset}"
+    fi
+  done
+' bash {} +
 
 echo -e "${green}username replacement task finished for $user_name.${reset}"
 
