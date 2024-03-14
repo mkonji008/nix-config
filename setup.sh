@@ -20,6 +20,24 @@ if ! id -u "$user_name" &>/dev/null; then
 fi
 
 ##
+# working though errors remotely currently
+function escape_quotes() {
+	local pattern="$1"
+	echo "${pattern//\"/\\\"}"
+}
+
+if [[ "$user_name" == "mkonji" ]]; then
+	echo -e "${yellow}skipping task for user: $user_name${reset}"
+	exit 0
+fi
+
+config.nix="/home/$user_name/nix-config/configuration.nix"
+
+escaped_pattern=$(escape_quotes "mkonji")
+sed -i "s/$escaped_pattern/$user_name/g" "$config.nix"
+
+echo "text replacement attempted in: $config.nix"
+
 function exclude_files() {
 	local omit_me="$1"
 	if [[ "$omit_me" == ".git" || "$omit_me" == "setup.sh" ]]; then
