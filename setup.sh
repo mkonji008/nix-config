@@ -19,17 +19,36 @@ if ! id -u "$user_name" &>/dev/null; then
 	exit 1
 fi
 
-if [ "$user_name" = "mkonji" ]; then
-	echo -e "${yellow}skipping replacement since username is mkonji.${reset}"
+##
+function exclude_files() {
+	local overlook="$1"
+	if [[ "$overlook" == ".git" || "$overlook" == "setup.sh" ]]; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+if [[ "$user_name" == "mkonji" ]]; then
+	echo -e "${red}skipping task for user: $user_name${reset}"
+	exit 0
 fi
 
-if ! find "/home/$user_name/nix-config/" -type d -name '.git' -prune -o -type f ! -name 'setup.sh' -exec sed -i "/mkonji/! s/mkonji/$user_name/g" {} +; then
-	echo -e "${red}error:${reset} failed to find and replace mkonji w/$user_name."
-	exit 1
-fi
+replaceme_dir="/home/$user_name/nix-config"
 
-echo -e "${green}change username in dotfiles to $user_name completed successfully.${reset}"
+for file in "$replaceme_dir"/*; do
+	if [[ -f "$overlook" && $(exclude_files "$(basename "$overlook")") -eq 0 ]]; then
+		echo -e "${yellow}processing file: $overlook${reset}"
 
+		sed -i "s/mkonji/$user_name/g" "$overlook"
+
+		echo -e "${green}Replacement completed in $replaceme_dir${reset}"
+	fi
+done
+
+echo -e "${green}username replacement task finished for $user_name.${reset}"
+
+##
 home_dir="/home/$user_name"
 
 ##
