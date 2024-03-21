@@ -197,17 +197,27 @@
          awscli2
          plumber
       # langsRelated-req
-         cargo
-         clang-tools_9
-         gcc
-         go
-         libgcc
-         nodePackages.npm
-         nodejs_21
-         python3
-         yamllint
-         rustc
-         cmake
+         # c/c++/universal c
+            clang-tools_9
+            gcc
+            libgcc
+            cmake
+         # go
+            go
+            air
+            hugo
+         # rust  
+            cargo
+            rustc
+            rustup
+         # js/ts
+            nodePackages.npm
+            nodejs_21
+            typescript
+            bun
+         # python
+            python3Full
+            yamllint
   # baseSystem-req
       arandr
       bat
@@ -279,6 +289,7 @@
       xfce.xfconf
       xz
       zip
+      noisetorch
      # themes
          gruvbox-dark-gtk
          gruvbox-gtk-theme

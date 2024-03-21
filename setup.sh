@@ -21,51 +21,51 @@ fi
 
 ##
 # working though errors remotely currently
-function escape_quotes() {
-	local pattern="$1"
-	echo "${pattern//\"/\\\"}"
-}
-
-if [[ "$user_name" == "mkonji" ]]; then
-	echo -e "${yellow}skipping task for user: $user_name${reset}"
-	exit 0
-fi
-
-config.nix="/home/$user_name/nix-config/configuration.nix"
-
-escaped_pattern=$(escape_quotes "mkonji")
-sed -i "s/$escaped_pattern/$user_name/g" "$config.nix"
-
-echo "text replacement attempted in: $config.nix"
-
-function exclude_files() {
-	local omit_me="$1"
-	if [[ "$omit_me" == ".git" || "$omit_me" == "setup.sh" ]]; then
-		return 1
-	else
-		return 0
-	fi
-}
-
-if [[ "$current_user" == "mkonji" ]]; then
-	echo -e "${yellow}skipping task for user: $current_user${reset}"
-	exit 0
-fi
-
-replaceme_dir="/home/$user_name/nix-config"
-
-find "$replaceme_dir" -type f -not -path "*/.git/*" -not -name "setup.sh" -exec bash -c '
-  for file do
-    if [[ -f "$omit_me" && $(exclude_files "$(basename "$omit_me")") -eq 0 ]]; then
-      echo -e "${yellow}Processing file: $omit_me${reset}"
-      sed -i "s/mkonji/$user_name/g" "$omit_me"
-      echo -e "${green}Replacement completed in $replaceme_dir${reset}"
-    fi
-  done
-' bash {} +
-
-echo -e "${green}username replacement task finished for $user_name.${reset}"
-
+#  function escape_quotes() {
+#  	local pattern="$1"
+#  	echo "${pattern//\"/\\\"}"
+#  }
+#
+#  if [[ "$user_name" == "mkonji" ]]; then
+#  	echo -e "${yellow}skipping task for user: $user_name${reset}"
+#  	exit 0
+#  fi
+#
+#  config.nix="/home/$user_name/nix-config/configuration.nix"
+#
+#  escaped_pattern=$(escape_quotes "mkonji")
+#  sed -i "s/$escaped_pattern/$user_name/g" "$config.nix"
+#
+#  echo "text replacement attempted in: $config.nix"
+#
+#  function exclude_files() {
+#  	local omit_me="$1"
+#  	if [[ "$omit_me" == ".git" || "$omit_me" == "setup.sh" ]]; then
+#  		return 1
+#  	else
+#  		return 0
+#  	fi
+#  }
+#
+#  if [[ "$current_user" == "mkonji" ]]; then
+#  	echo -e "${yellow}skipping task for user: $current_user${reset}"
+#  	exit 0
+#  fi
+#
+#  replaceme_dir="/home/$user_name/nix-config"
+#
+#  find "$replaceme_dir" -type f -not -path "*/.git/*" -not -name "setup.sh" -exec bash -c '
+#    for file do
+#      if [[ -f "$omit_me" && $(exclude_files "$(basename "$omit_me")") -eq 0 ]]; then
+#        echo -e "${yellow}processing file: $omit_me${reset}"
+#        sed -i "s/mkonji/$user_name/g" "$omit_me"
+#        echo -e "${green}replacement completed in $replaceme_dir${reset}"
+#      fi
+#    done
+#  ' bash {} +
+#
+#  echo -e "${green}username replacement task finished for $user_name.${reset}"
+#
 ##
 home_dir="/home/$user_name"
 
