@@ -144,6 +144,15 @@ alias lsd='ls -alF | grep /$'
 
 alias localip='ip -brief -color addr'
 
+# git
+alias lg='lazygit'
+alias 'git ll'='git log --oneline'
+alias 'git last'='git log -1 HEAD --stat'
+alias 'git cm'='commit -m'
+alias 'git rv'='git remote -v'
+alias 'git d'='git diff'
+alias 'git st'='git status -sb'
+
 # This is GOLD for finding out what is taking so much space on your drives!
 alias diskspace="du -S | sort -n -r |more"
 
