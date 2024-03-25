@@ -119,41 +119,45 @@
   environment.systemPackages = with pkgs; [
   # mainApplications
     # optWork
-        zoom-us
-        slack
-        teams-for-linux
+       zoom-us
+       slack
+       teams-for-linux
     # browsers
-        #brave
-        floorp 
-        qutebrowser
+       #brave
+       floorp 
+       qutebrowser
     # media
-        vlc
-        mplayer
-        cmus
-        strawberry
-        foliate
-        zathura
-        ffmpeg #codec
+       vlc
+       mplayer
+       cmus
+       strawberry
+       foliate
+       zathura
+       ffmpeg #codec
     # editing
-        krita
-        darktable
-        kdePackages.kdenlive
-        upscayl
+       krita
+       darktable
+       kdePackages.kdenlive
+       upscayl
     # office 
-        libreoffice
-        obsidian
+       libreoffice
+       obsidian
     # misc
-        bitwarden-desktop 
-        tutanota-desktop
-        filezilla
+       bitwarden-desktop 
+       tutanota-desktop
+       filezilla
+       kdePackages.kdeconnect-kde 
+       remmina
+       flameshot
+       copyq
     # downloading
-        deluge-gtk
-        yt-dlp
-        tartube
+       deluge-gtk
+       yt-dlp
+       tartube
     # keyboard
-        vial
-        via
-        qmk
+       vial
+       via
+       qmk
     #personalNonDev
          # optGame
             #heroic-unwrapped
@@ -169,7 +173,34 @@
             #discord
             #signal-desktop
   # devPackages
+      # cliTools
+         tldr
+         bat
+         zoxide
+         fzf
+         git
+         ripgrep
+         tmux
+         trash-cli
+         eza
+         ranger
+         neovim
+         mlocate
+         htop
+         btop
+         neofetch
+         elinks
+         w3m
+         wget
+         curl
+         cron
+         gnugrep
+         xclip
+      # virtTools
+         qemu
+         virt-manager
       # devTools
+         github-desktop
          ansible
          terraform
          #terraform-providers.ansible
@@ -183,7 +214,6 @@
          #terraform-providers.utils
          terraformer
          terraform-inventory
-         virt-manager
          rancher
          k3d
          kargo
@@ -218,97 +248,78 @@
          # python
             python3Full
             yamllint
-  # baseSystem-req
-      arandr
-      bat
-      btop
-      bzip3
-      copyq
-      cron
-      curl
-      dex
-      doas
-      dosfstools
-      dunst
-      elinks
-      eza
-      filezilla
-      flameshot
-      flatpak
-      font-manager
-      fontconfig
-      fuse-common
-      fzf
-      git
-      gnome.gnome-keyring
-      gnugrep
-      gnumake
-      google-drive-ocamlfuse
-      gparted
-      gzip
-      htop
-      i3
-      kdePackages.kdeconnect-kde
-      lxappearance
-      mlocate
-      neofetch
-      neovim
-      networkmanager-openvpn
-      networkmanagerapplet
-      nitrogen
-      openssl
-      os-prober
-      p7zip
-      pavucontrol
-      picom
-      polkit_gnome
-      psmisc
-      pulseaudioFull
-      qemu
-      ranger
-      rar
-      remmina
-      ripgrep
-      rofi
-      rsync
-      syncthing
-      timeshift-unwrapped
-      tldr
-      tmux
-      trash-cli
-      unzip
-      usbutils
-      w3m
-      wget
-      xarchiver
-      xclip
-      xdg-desktop-portal-gtk
-      xfce.ristretto
-      xfce.thunar
-      xfce.xfce4-terminal
-      xfce.xfconf
-      xz
-      zip
-      noisetorch
+         # miscLang
+            dex
+  # baseSystem&WM-req
+     # miscReq
+        doas
+        flatpak
+        gnumake
+        openssl
+        os-prober
+     # windowManager
+        i3
+        rofi
+        picom
+        polkit_gnome
+        nitrogen
+        xfce.xfce4-terminal
+        xfce.xfconf
+        xfce.thunar
+        xfce.ristretto
+        gnome.gnome-keyring
+        fontconfig
+        font-manager
+        xdg-desktop-portal-gtk
+        lxappearance
+        arandr
+        dunst
+     # networking
+        networkmanager-openvpn
+        networkmanagerapplet
+     # backupDisksStorage
+        google-drive-ocamlfuse
+        gparted
+        rsync
+        syncthing
+        timeshift-unwrapped
+        usbutils
+        util-linux
+        psmisc
+        fuse-common
+        dosfstools
+     # systemAudio
+        pulseaudioFull
+        pavucontrol
+        noisetorch
+     # zip&CompressionTools
+        unzip
+        p7zip
+        zip
+        rar
+        gzip
+        bzip3
+        xz
+        xarchiver
      # themes
-         gruvbox-dark-gtk
-         gruvbox-gtk-theme
-         onestepback
-         shades-of-gray-theme
-         xfce.xfwm4-themes
+        gruvbox-dark-gtk
+        gruvbox-gtk-theme
+        onestepback
+        shades-of-gray-theme
+        xfce.xfwm4-themes
      # icons
-         gruvbox-dark-icons-gtk
-         gruvbox-plus-icons
-         material-black-colors
-         numix-icon-theme
-         oranchelo-icon-theme
+        gruvbox-dark-icons-gtk
+        gruvbox-plus-icons
+        material-black-colors
+        numix-icon-theme
+        oranchelo-icon-theme
      # cursors
-         capitaine-cursors
-         material-cursors
-         phinger-cursors
-         simp1e-cursors
-         vimix-cursors
-         xorg.xcursorthemes
+        capitaine-cursors
+        material-cursors
+        phinger-cursors
+        simp1e-cursors
+        vimix-cursors
+        xorg.xcursorthemes
    #(compile errors) use flatpak
       #rustdesk
       #vault
