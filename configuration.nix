@@ -119,45 +119,45 @@
   environment.systemPackages = with pkgs; [
   # mainApplications
     # optWork
-       zoom-us
        slack
        teams-for-linux
+       zoom-us
     # browsers
        #brave
        floorp 
        qutebrowser
     # media
-       vlc
-       mplayer
        cmus
-       strawberry
-       foliate
-       zathura
        ffmpeg #codec
+       foliate
+       mplayer
+       strawberry
+       vlc
+       zathura
     # editing
-       krita
        darktable
        kdePackages.kdenlive
+       krita
        upscayl
     # office 
        libreoffice
        obsidian
     # misc
        bitwarden-desktop 
-       tutanota-desktop
+       copyq
        filezilla
+       flameshot
        kdePackages.kdeconnect-kde 
        remmina
-       flameshot
-       copyq
+       tutanota-desktop
     # downloading
        deluge-gtk
-       yt-dlp
        tartube
+       yt-dlp
     # keyboard
-       vial
-       via
        qmk
+       via
+       vial
     #personalNonDev
          # optGame
             #heroic-unwrapped
@@ -167,84 +167,85 @@
             #protonup-qt
             #steam
             #steam-run
-         # optDiscUtils
+         # optVintageUtils
             #kdePackages.k3b
+            #ufiformat
          # chat
             #discord
             #signal-desktop
   # devPackages
       # cliTools
-         tldr
          bat
-         zoxide
+         btop
+         cron
+         curl
+         elinks
+         eza
          fzf
          git
+         gnugrep
+         htop
+         mlocate
+         neofetch
+         neovim
+         ranger
          ripgrep
+         tldr
          tmux
          trash-cli
-         eza
-         ranger
-         neovim
-         mlocate
-         htop
-         btop
-         neofetch
-         elinks
          w3m
          wget
-         curl
-         cron
-         gnugrep
          xclip
+         zoxide
       # virtTools
          qemu
          virt-manager
       # devTools
-         github-desktop
-         ansible
-         terraform
-         #terraform-providers.ansible
-         #terraform-providers.helm
-         #terraform-providers.
-         #terraform-providers.vault
-         #terraform-providers.postgresql
-         #terraform-providers.dns
-         #terraform-providers.aws
-         #terraform-providers.google
-         #terraform-providers.utils
-         terraformer
-         terraform-inventory
-         rancher
-         k3d
-         kargo
          #docker
          #docker-compose
-         podman
-         podman-tui
-         podman-compose
-         pods
-         distrobox
+         #terraform-providers.
+         #terraform-providers.ansible
+         #terraform-providers.aws
+         #terraform-providers.dns
+         #terraform-providers.google
+         #terraform-providers.helm
+         #terraform-providers.postgresql
+         #terraform-providers.utils
+         #terraform-providers.vault
+         ansible
          awscli2
+         distrobox
+         github-desktop
+         k3d
+         kargo
          plumber
+         podman
+         podman-compose
+         podman-tui
+         pods
+         rancher
+         terraform
+         terraform-inventory
+         terraformer
       # langsRelated-req
          # c/c++/universal c
             clang-tools_9
+            cmake
             gcc
             libgcc
-            cmake
          # go
-            go
             air
+            go
             hugo
          # rust  
             cargo
             rustc
             rustup
          # js/ts
+            bun
             nodePackages.npm
             nodejs_21
             typescript
-            bun
          # python
             python3Full
             yamllint
@@ -257,50 +258,57 @@
         gnumake
         openssl
         os-prober
+      # hardwareTools
+         amdctl
+         amdgpu_top
+         lm_sensors
+         psendor
      # windowManager
-        i3
-        rofi
-        picom
-        polkit_gnome
-        nitrogen
-        xfce.xfce4-terminal
-        xfce.xfconf
-        xfce.thunar
-        xfce.ristretto
-        gnome.gnome-keyring
-        fontconfig
-        font-manager
-        xdg-desktop-portal-gtk
-        lxappearance
         arandr
         dunst
+        font-manager
+        fontconfig
+        gnome.gnome-keyring
+        i3
+        lxappearance
+        nitrogen
+        picom
+        polkit_gnome
+        rofi
+        xdg-desktop-portal-gtk
+        xfce.ristretto
+        xfce.thunar
+        xfce.xfce4-power-manager
+        xfce.xfce4-terminal
+        xfce.xfconf
      # networking
         networkmanager-openvpn
         networkmanagerapplet
      # backupDisksStorage
+        dosfstools
+        fuse-common
         google-drive-ocamlfuse
         gparted
+        psmisc
         rsync
         syncthing
         timeshift-unwrapped
         usbutils
         util-linux
-        psmisc
-        fuse-common
-        dosfstools
+        smbnetfs
      # systemAudio
-        pulseaudioFull
-        pavucontrol
         noisetorch
+        pavucontrol
+        pulseaudioFull
      # zip&CompressionTools
-        unzip
-        p7zip
-        zip
-        rar
-        gzip
         bzip3
-        xz
+        gzip
+        p7zip
+        rar
+        unzip
         xarchiver
+        xz
+        zip
      # themes
         gruvbox-dark-gtk
         gruvbox-gtk-theme
