@@ -123,7 +123,7 @@
        teams-for-linux
        zoom-us
     # browsers
-       #brave
+       brave
        floorp 
        qutebrowser
     # media
@@ -154,6 +154,10 @@
        deluge-gtk
        tartube
        yt-dlp
+       ytdownloader
+    # ai tooling
+       #gpt4all
+       tgpt
     # keyboard
        qmk
        via
@@ -168,8 +172,8 @@
             #steam
             #steam-run
          # optVintageUtils
-            #kdePackages.k3b
-            #ufiformat
+            #kdePackages.k3b ## iso disc burning
+            #ufiformat ## usb floppy formatter
          # chat
             #discord
             #signal-desktop
