@@ -286,6 +286,7 @@
         xfce.xfce4-terminal
         xfce.xfconf
      # networking
+        tailscale
         networkmanager-openvpn
         networkmanagerapplet
      # backupDisksStorage
