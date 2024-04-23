@@ -164,19 +164,19 @@
        vial
     #personalNonDev
          # optGame
-            #heroic-unwrapped
-            #lutris-unwrapped
-            #openmw
-            #protonup-ng
-            #protonup-qt
-            #steam
-            #steam-run
+            heroic-unwrapped
+            lutris-unwrapped
+            openmw
+            protonup-ng
+            protonup-qt
+            steam
+            steam-run
          # optVintageUtils
-            #kdePackages.k3b ## iso disc burning
-            #ufiformat ## usb floppy formatter
+            kdePackages.k3b ## iso disc burning
+            ufiformat ## usb floppy formatter
          # chat
-            #discord
-            #signal-desktop
+            discord
+            signal-desktop
   # devPackages
       # cliTools
          bat
@@ -187,6 +187,7 @@
          eza
          fzf
          git
+         lazygit
          gnugrep
          htop
          mlocate
@@ -205,17 +206,16 @@
          qemu
          virt-manager
       # devTools
-         #docker
-         #docker-compose
-         #terraform-providers.
-         #terraform-providers.ansible
-         #terraform-providers.aws
-         #terraform-providers.dns
-         #terraform-providers.google
-         #terraform-providers.helm
-         #terraform-providers.postgresql
-         #terraform-providers.utils
-         #terraform-providers.vault
+         docker
+         docker-compose
+         terraform-providers.ansible
+         terraform-providers.aws
+         terraform-providers.dns
+         terraform-providers.google
+         terraform-providers.helm
+         terraform-providers.postgresql
+         terraform-providers.utils
+         terraform-providers.vault
          ansible
          awscli2
          distrobox
@@ -233,7 +233,7 @@
          terraformer
       # langsRelated-req
          # c/c++/universal c
-            clang-tools_9
+            clang-tools
             cmake
             gcc
             libgcc
@@ -266,7 +266,7 @@
          amdctl
          amdgpu_top
          lm_sensors
-         psendor
+         psensor
      # windowManager
         arandr
         dunst
@@ -385,7 +385,12 @@
         };
       };
     };
-    
+   
+  services.udev.packages = with pkgs; [
+  vial
+  via
+  ];
+
     security.polkit.enable = true;
 
     virtualisation.libvirtd.enable = true;
