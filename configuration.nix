@@ -300,6 +300,7 @@
         timeshift-unwrapped
         usbutils
         util-linux
+        pciutils
         smbnetfs
      # systemAudio
         noisetorch
