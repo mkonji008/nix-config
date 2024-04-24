@@ -79,7 +79,7 @@
      GDK_SCALE = "1"; # default 1 for FHD
       GDK_DPI_SCALE = "1"; # default 1 for FHD
       _JAVA_OPTIONS = "-Dsun.java2d.uiScale=1"; # default 1 for FHD
-      QT_AUTO_SCREEN_SCALE_FACTOR = "1"; default 1 for FHD
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1"; # default 1 for FHD
       XCURSOR_SIZE = "16"; # default 16 for FHD
    };
 
@@ -347,6 +347,10 @@
         simp1e-cursors
         vimix-cursors
         xorg.xcursorthemes
+        apple-cursor
+        hackneyed
+	      openzone-cursors
+        bibata-cursors
    #(compile errors) use flatpak
       #rustdesk
       #vault
