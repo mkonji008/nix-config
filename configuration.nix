@@ -75,6 +75,13 @@
       "root"
     ];
   };
+   environment.variables = {
+     GDK_SCALE = "1"; # default 1 for FHD
+      GDK_DPI_SCALE = "1"; # default 1 for FHD
+      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=1"; # default 1 for FHD
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1"; default 1 for FHD
+      XCURSOR_SIZE = "16"; # default 16 for FHD
+   };
 
   services = {
     flatpak.enable = true;
@@ -86,6 +93,9 @@
       autorun = true;
       enable = true;
       windowManager.i3.enable = true;
+      dpi = 96; # default 96 for FHD
+      upscaleDefaultCursor = false; # default false for FHD
+
       xkb.layout = "us";
       videoDrivers = [ "amdgpu" ];
       deviceSection = ''Option "TearFree" "true"'';
