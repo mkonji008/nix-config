@@ -87,6 +87,8 @@
       enable = true;
       windowManager.i3.enable = true;
       xkb.layout = "us";
+      videoDrivers = [ "amdgpu" ];
+      deviceSection = ''Option "TearFree" "true"'';
 
       desktopManager.xterm.enable = true;
 
@@ -164,7 +166,8 @@
        vial
     #personalNonDev
          # optGame
-            heroic-unwrapped
+            heroic
+            gogdl
             lutris-unwrapped
             openmw
             protonup-ng

@@ -106,12 +106,12 @@ bindsym $mod+Shift+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#83A598' -
 # A more modern dmenu replacement is rofi:
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -line-padding 4 \
                 -columns 2 -padding 50 -hide-scrollbar -terminal xfce4-terminal \
-                #-show-icons -drun-icon-theme "Cloudy-Solid-Grey-Dark" 
+                -show-icons -drun-icon-theme "Cloudy-Solid-Grey-Dark" \
                 -font "FiraMono Nerd Font Bold 12"
 # rofi show open window
 bindsym $mod+x exec --no-startup-id rofi -modi drun -show window -line-padding 4 \
                 -columns 2 -padding 50 -hide-scrollbar -terminal xfce4-terminal \
-                #-show-icons -drun-icon-theme "Cloudy-Solid-Grey-Dark" 
+                -show-icons -drun-icon-theme "Cloudy-Solid-Grey-Dark" \
                 -font "FiraMono Nerd Font Bold 12"
 
 # change focus
@@ -205,7 +205,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # monitors
 set $monitor_top "DisplayPort-1"
 set $monitor_bottom "DisplayPort-2"
-
+workspace "0" output "DisplayPort-2"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
