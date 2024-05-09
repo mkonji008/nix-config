@@ -211,6 +211,7 @@
          elinks
          eza
          fzf
+         fd
          git
          lazygit
          gnugrep
@@ -229,7 +230,6 @@
          zoxide
       # virtTools
          qemu
-         virt-manager
       # devTools
          docker
          docker-compose
@@ -253,11 +253,13 @@
          podman-tui
          pods
          rancher
+         tree-sitter
          terraform
          terraform-inventory
          terraformer
       # langsRelated-req
          # c/c++/universal c
+            clang
             clang-tools
             cmake
             gcc
@@ -265,6 +267,7 @@
          # go
             air
             go
+            gopher
             hugo
          # rust  
             cargo
@@ -277,6 +280,7 @@
             typescript
          # python
             python3Full
+            pipx
             yamllint
          # miscLang
             dex
@@ -287,7 +291,7 @@
         gnumake
         openssl
         os-prober
-	xorg.xkill
+	      xorg.xkill
       # hardwareTools
          amdctl
          amdgpu_top
