@@ -127,6 +127,11 @@ alias sudo='doas'
 
 alias nixrb='doas nixos-rebuild switch'
 alias nixup='doas nixos-rebuild switch --upgrade-all'
+alias nixgen-list='doas nix-env --list-generations --profile /nix/var/nix/profiles/system'
+alias nixgen-delold='doas nix-env --delete-generations old --profile /nix/var/nix/profiles/system'
+nixgen-delnum() {
+	doas nix-env --delete-generations "$1" --profile /nix/var/nix/profiles/system
+}
 
 alias ns='nix-shell -p'
 alias md='mkdir -p'

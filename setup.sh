@@ -102,11 +102,10 @@ else
 fi
 
 ##
-read -p "$(echo -e "${blue}copy configuration.nix and hardware-configuration.nix to /etc/nixos/? (y/n) ${reset}")" -r confirm_nix_copy
+read -p "$(echo -e "${blue}copy configuration.nix and and other *.nix configs to /etc/nixos/? (y/n) ${reset}")" -r confirm_nix_copy
 if [[ "$confirm_nix_copy" =~ ^[yy]$ ]]; then
 	echo -e "${yellow}copying configuration files...${reset}"
-	cp -f configuration.nix /etc/nixos/
-	#  cp -f hardware-configuration.nix /etc/nixos/
+	cp -f *.nix /etc/nixos/
 	echo -e "${green}configuration files copied.${reset}"
 
 	echo -e "${yellow}rebuilding nixos configuration...${reset}"
@@ -219,6 +218,10 @@ else
 	echo -e "${red}failed to change permissions.${reset}"
 	exit 1
 fi
+
+##
+## simple virt-manager net autostart, to be updated at a later time
+virsh net-autostart default
 
 ##
 su -l $user_name -c "

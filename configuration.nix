@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./virt-manager.nix
     ];
 
   documentation.nixos.enable = false;
@@ -31,7 +32,15 @@
   networking.hostName = "nixbox";
   # networking.wireless.enable = true; 
   networking.networkmanager.enable = true;
-
+  networking.firewall = { 
+    enable = true;
+    allowedTCPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+    allowedUDPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+  };
   time.timeZone = "America/New_York";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -71,8 +80,8 @@
       "wheel"
       "audio"
       "video"
-      "libvirtd"
       "root"
+      "storage"
     ];
   };
    environment.variables = {
@@ -88,6 +97,9 @@
     dbus.enable = true;
     picom.enable = true;
     qemuGuest.enable = true;
+    gvfs.enable = true;
+    udisks2.enable = true;
+    devmon.enable = true;
 
     xserver = {
       autorun = true;
@@ -275,6 +287,7 @@
         gnumake
         openssl
         os-prober
+	xorg.xkill
       # hardwareTools
          amdctl
          amdgpu_top
@@ -287,6 +300,7 @@
         fontconfig
         gnome.gnome-keyring
         i3
+	      i3lock
         lxappearance
         nitrogen
         picom
@@ -297,7 +311,10 @@
         xfce.thunar
         xfce.xfce4-power-manager
         xfce.xfce4-terminal
-        xfce.xfconf
+        xfce.xfce4-screensaver
+	      xfce.xfconf
+	      xfce.tumbler
+	      ffmpegthumbnailer
      # networking
         tailscale
         networkmanager-openvpn
@@ -315,6 +332,8 @@
         util-linux
         pciutils
         smbnetfs
+	      udiskie
+	      udisks
      # systemAudio
         noisetorch
         pavucontrol
@@ -347,10 +366,10 @@
         simp1e-cursors
         vimix-cursors
         xorg.xcursorthemes
-        apple-cursor
-        hackneyed
+	      apple-cursor
+	      hackneyed
 	      openzone-cursors
-        bibata-cursors
+	      bibata-cursors
    #(compile errors) use flatpak
       #rustdesk
       #vault
@@ -403,16 +422,21 @@
         };
       };
     };
-   
+
+ # additional configs
+  hardware.opengl.extraPackages = with pkgs; [
+    amdvlk
+  ];
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
   services.udev.packages = with pkgs; [
   vial
   via
   ];
 
-    security.polkit.enable = true;
-
-    virtualisation.libvirtd.enable = true;
+  security.polkit.enable = true;
 
   system.stateVersion = "23.11";
-
 }
