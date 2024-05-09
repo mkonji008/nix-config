@@ -276,7 +276,7 @@
          # js/ts
             bun
             nodePackages.npm
-            nodejs_21
+            nodePackages.nodejs
             typescript
          # python
             python3Full
