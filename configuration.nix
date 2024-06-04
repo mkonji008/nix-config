@@ -146,10 +146,12 @@
        slack
        teams-for-linux
        zoom-us
+       obs-studio
     # browsers
        brave
-       floorp 
+       floorp
        qutebrowser
+       tor-browser
     # media
        cmus
        ffmpeg #codec
@@ -174,6 +176,7 @@
        kdePackages.kdeconnect-kde 
        remmina
        tutanota-desktop
+       telegram-desktop
     # downloading
        deluge-gtk
        tartube
@@ -323,6 +326,7 @@
         tailscale
         networkmanager-openvpn
         networkmanagerapplet
+        angryipscanner
      # backupDisksStorage
         dosfstools
         fuse-common
