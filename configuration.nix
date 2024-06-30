@@ -164,6 +164,7 @@
        darktable
        kdePackages.kdenlive
        krita
+       pinta
        upscayl
     # office 
        libreoffice
@@ -171,12 +172,16 @@
     # misc
        bitwarden-desktop 
        copyq
+       galculator
        filezilla
        flameshot
        kdePackages.kdeconnect-kde 
        remmina
        tutanota-desktop
        telegram-desktop
+       gencfsm
+       gnome2.GConf
+       cura
     # downloading
        deluge-gtk
        tartube
@@ -197,6 +202,7 @@
             openmw
             protonup-ng
             protonup-qt
+            wine
             steam
             steam-run
          # optVintageUtils
@@ -439,6 +445,7 @@
     driversi686Linux.amdvlk
   ];
 
+  
   services.udev.packages = with pkgs; [
   vial
   via
